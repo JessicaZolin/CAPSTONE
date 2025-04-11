@@ -3,6 +3,7 @@ import uploadCloudinary from "./middlewares/cloudinary.js";
 import { verifyToken } from "./middlewares/authorization.js";
 import * as authController from "./controllers/auth.controller.js";
 import * as userController from "./controllers/user.controller.js";
+import * as exerciseController from "./controllers/exercise.controller.js";
 
 const router = Router();
 
@@ -21,7 +22,6 @@ router.post(
   uploadCloudinary.single("profileImage"),
   authController.register
 );
-// router.post('/login', /* authController.login */)
 router.post("/login-google", verifyToken, authController.loginGoogle);
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ router.post("/login-google", verifyToken, authController.loginGoogle);
 // ROUTE FOR THE USER
 
 router.get("/me", verifyToken, userController.readAuthUser);
-// router.patch('/me', /*verifyToken, userController.updateAuthUser */)
+// router.patch('/me', verifyToken, cloudinary.single("profileImage"), userController.updateAuthUser)
 router.patch(
   "/me/image",
   verifyToken,
@@ -49,11 +49,11 @@ router.patch(
 
 // ROUTE FOR THE EXERCISES
 
-// router.post('/exercises', /* exerciseController.createExercise */)
-// router.get('/exercises', /* exerciseController.readMultipleExercises */)
-// router.get('/exercises/:exerciseId', /* exerciseController.readSingleExercise */)
-// router.patch('/exercises/:exerciseId', /* exerciseController.updateExercise */)
-// router.delete('/exercises/:exerciseId', /* exerciseController.destroyExercise */)
+router.post('/exercises', uploadCloudinary.single("cover"), exerciseController.createExercises)
+router.get('/exercises', exerciseController.readMultipleExercises)
+router.get('/exercises/:exerciseId', exerciseController.readSingleExercise)
+router.patch('/exercises/:exerciseId', uploadCloudinary.single("cover"), exerciseController.updateSingleExercise)
+router.delete('/exercises/:exerciseId', exerciseController.destroySingleExercise)
 
 export default router;
 

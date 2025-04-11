@@ -13,8 +13,24 @@ export async function readAuthUser(request, response, next) {
   }
 }
 
+// -------------------------------------------------------------------------------------------------------------
+
 // update logged in user
-export async function updateAuthUser(request, response, next) {}
+export async function updateAuthUser(request, response, next) {
+  try {
+    const userModified = await User.findOneAndUpdate(
+      { firebaseUID: request.user.uid },
+      request.body,
+      { new: true }
+    );
+    response.send(userModified);
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+// -------------------------------------------------------------------------------------------------------------
 
 // update logged in user image
 export async function updateAuthUserImage(request, response, next) {
@@ -27,11 +43,17 @@ export async function updateAuthUserImage(request, response, next) {
   response.send(userModified);
 }
 
+// -------------------------------------------------------------------------------------------------------------
+
 // delete logged in user
 export async function destroyAuthUser(request, response, next) {}
 
+// -------------------------------------------------------------------------------------------------------------
+
 // read multiple users
 export async function readMultipleUsers(request, response, next) {}
+
+// -------------------------------------------------------------------------------------------------------------
 
 // read single user
 export async function readSingleUser(request, response, next) {}

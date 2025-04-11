@@ -38,7 +38,7 @@ export async function register(request, response, next) {
   }
 }
 
-// --------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------
 
 // login a user with google
 export async function loginGoogle(request, response, next) {
