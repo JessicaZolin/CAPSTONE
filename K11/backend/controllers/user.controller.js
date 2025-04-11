@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import { deleteUser } from "../middlewares/authorization.js";
 
 // read logged in user
 export async function readAuthUser(request, response, next) {
@@ -46,7 +47,15 @@ export async function updateAuthUserImage(request, response, next) {
 // -------------------------------------------------------------------------------------------------------------
 
 // delete logged in user
-export async function destroyAuthUser(request, response, next) {}
+export async function destroyAuthUser(request, response, next) {
+  const deletedUser = await User.findOneAndDelete({
+    firebaseUID: request.user.uid,
+  });
+  response.send(deletedUser);
+
+  const deletedFirebaseUser = await deleteUser(request.user.uid);
+  response.send(deletedFirebaseUser);
+}
 
 // -------------------------------------------------------------------------------------------------------------
 

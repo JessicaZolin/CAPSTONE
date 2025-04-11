@@ -36,7 +36,7 @@ router.patch(
   uploadCloudinary.single("profileImage"),
   userController.updateAuthUserImage
 );
-// router.delete('/me', /*verifyToken, userController.destroyAuthUser */)
+router.delete('/me', verifyToken, userController.destroyAuthUser)
 
 // ---------------------------------------------------------------------------------------------------------------
 

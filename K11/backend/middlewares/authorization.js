@@ -25,3 +25,12 @@ export async function verifyToken(request, response, next) {
       response.status(401).json({ message: "Unauthorized" });
     }
   }
+
+  export async function deleteUser (uid) {
+    try {
+      await auth.deleteUser(uid);
+      console.log("User deleted successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  }
