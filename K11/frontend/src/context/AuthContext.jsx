@@ -17,14 +17,14 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(null);
-  const [mongoUser, setMongoUser] = useState();
+  const [mongoUser, setMongoUser] = useState(null);
 
   // -------------------------------------------------------- monitor authentication state
   useEffect(() => {
-    let isMounted = true;
+    /* let isMounted = true; */
     // Gestisce il risultato del redirect quando l'utente torna
     const handleRedirectResult = async () => {
       try {
@@ -39,6 +39,8 @@ export const AuthContextProvider = ({ children }) => {
     };
     handleRedirectResult();
 
+    // ---------------------------------------------------------------------------------------
+
     const fetchUserData = async (token) => {
       try {
         const response = await axios.get(
@@ -50,33 +52,31 @@ export const AuthContextProvider = ({ children }) => {
             },
           }
         );
-        if (isMounted) {
-          setMongoUser(response.data);
-          setLoading(false);
-        }
+        return response.data;
       } catch (error) {
         console.error("Error fetching user data:", error);
-        if (isMounted) {
-          setLoading(false);
-        }
       }
     };
 
+    // ---------------------------------------------------------------------------------------
+
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (!isMounted) {
-        return;
-      }
       try {
         if (currentUser) {
           const token = await currentUser.getIdToken();
           setUser(currentUser);
           setToken(token);
-          await fetchUserData(token);
+          const mongoUserIN = await fetchUserData(token);
+          if (mongoUserIN) {
+            setMongoUser(mongoUserIN);
+            setLoading(false);
+          }
         } else {
           setUser(null);
           setToken(null);
           setMongoUser(null);
           setLoading(false);
+          // setLoading(false);
         }
       } catch (error) {
         console.log("User state changed error:", error);
@@ -86,7 +86,6 @@ export const AuthContextProvider = ({ children }) => {
 
     // cleanup function
     return () => {
-      isMounted = false;
       unsubscribe();
     };
   }, []);
@@ -158,10 +157,10 @@ export const AuthContextProvider = ({ children }) => {
     email,
     password,
     firstName,
-    lastName,
+    lastName
   ) => {
     try {
-      // ------------------------------------------------------------------------------------------------------------------------ 
+      // ------------------------------------------------------------------------------------------------------------------------
       //call the createUserWithEmailAndPassword function
       const userCredential = await createUserWithEmailAndPassword(
         auth, // the first parameter requires a reference to the service the fuunction is operating on (here auth)
@@ -181,7 +180,7 @@ export const AuthContextProvider = ({ children }) => {
       const findedToken = await userCredential.user.getIdToken();
       console.log("token:", findedToken);
 
-      // ------------------------------------------------------------------------------------------------------------------------ 
+      // ------------------------------------------------------------------------------------------------------------------------
       //call the backend to register the user with token and the form data from the form
       if (userCredential && findedToken) {
         const backendResponse = await axios.post(
@@ -254,6 +253,7 @@ export const AuthContextProvider = ({ children }) => {
         emailAndPasswordSingIn,
         logOut,
         setUser,
+        setMongoUser,
         user,
         loading,
         token,

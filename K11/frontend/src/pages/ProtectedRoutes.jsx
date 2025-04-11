@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 
 const ProtectedRoutes = () => {
   const { user, loading } = UserAuth();
+  console.log(user, loading);
 
   if (loading) {
     return (
@@ -15,15 +16,17 @@ const ProtectedRoutes = () => {
     );
   }
 
-  if (!user) {
+  if (!user || user === undefined || user === null) {
     return <Navigate to="/welcome" replace />;
   }
 
   return (
     <>
-      <NavBar />
+      
+      {/* <NavBar style={{ position: "fixed", zIndex: 100 }} /> */}
       <Outlet />
-      <Footer />
+      {/* <Footer /> */}
+    
     </>
   );
 };

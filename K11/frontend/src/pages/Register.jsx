@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
-import { auth } from "../firebase/firebaseConfig.js";
 import { UserAuth } from "../context/AuthContext.jsx";
 
 const Register = () => {
@@ -51,27 +49,6 @@ const Register = () => {
         return;
       }
 
-      // Get the token from the response
-      /* const token = await response.getIdToken(); // Get the token from the response
-      console.log("Token:", token);
-
-      if (response && token) {
-        // Call the backend to register the user with the token and the form data from the form
-        const backendResponse = await axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/register`,
-          response,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token,
-            },
-          }
-        );
-
-        // get the user data from the backend response
-        const userData = await backendResponse.data;
-        console.log("User data from backend:", userData); */
-
       // after successful registration and saving the user in the database, redirect to the homepage
       navigate("/");
     } catch (error) {
@@ -95,7 +72,7 @@ const Register = () => {
       <Button
         type="submit"
         as={Link}
-        to="/"
+        to="/welcome"
         className="align-self-start mb-3 mb-md-0"
       >
         {" "}

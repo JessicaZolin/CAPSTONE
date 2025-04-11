@@ -22,27 +22,9 @@ const NavBar = () => {
   const { user, logOut, mongoUser } = UserAuth();
   const navigate = useNavigate();
   /* const { setSearch } = useSearch(); */
- /*  const [query, setQuery] = useState(""); */
+  /*  const [query, setQuery] = useState(""); */
   const [expanded, setExpanded] = useState(false);
 
-  console.log(mongoUser, user.photoURL, user);
-
-  /*  const myProfile = async () => {
-    const profile = await user.getIdToken();
-    console.log(profile);
-
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/me`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${profile}`,
-          },
-        }
-      );
- */
   // ---------------------------- Function to handle search ----------------------------
   /*  const handleSearch = (e) => {
       e.preventDefault();
@@ -73,20 +55,30 @@ const NavBar = () => {
       // ---------------------------- Set the expanded state of the navbar
       expanded={expanded}
       onToggle={(isexpanded) => setExpanded(isexpanded)}
+      variant="dark"
+      style={{
+        height: "100px",
+        backgroundImage:
+          "url(https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg)",
+        backgroundPosition: "center",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
+        backgroundColor: "black",
+      }}
     >
       <Container>
-        <Navbar.Brand as={Link} to="/" onClick={handleNavigation}>
+        {/* <Navbar.Brand as={Link} to="/" onClick={handleNavigation}>
           <img
             src="https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg"
             alt=""
-            style={{ width: "100px", height: "100px" }}
+            style={{ width: "80px", height: "80px" }}
           />
-        </Navbar.Brand>
+        </Navbar.Brand> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
             <Nav.Link as={Link} to="/" onClick={handleNavigation}>
-              <h3>BE YOUR BEST SELF</h3>
+              <h3 className="m-0">BE YOUR BEST SELF</h3>
             </Nav.Link>
           </Nav>
 
@@ -115,81 +107,88 @@ const NavBar = () => {
               </Col>
             </Row>
           </Form>*/}
-
-          <Nav className="mt-2 mt-lg-0 ms-auto">
-            <>
-              <div className="d-flex align-items-center">
-                <Image
-                  src={mongoUser?.profileImage ||defaultProfileImage}
-                  roundedCircle
-                  width={50}
-                  height={50}
-                  className="me-2 object-fit-cover"
-                />
-                <NavDropdown
-                  title={
-                    mongoUser ? `Ciao, ${mongoUser.firstName} ${mongoUser.lastName}`
-                      : `Ciao, ${user?.displayName}`
-                  }
-                  id="basic-nav-dropdown"
-                  align="end"
-                  style={{ fontSize: "13pt" }}
-                >
-                  <NavDropdown.Item
-                    as={Link}
-                    to="/dashboard"
-                    onClick={handleNavigation}
+          {user && mongoUser && (
+            <Nav className="mt-2 mt-lg-0 ms-auto">
+              <>
+                <div className="d-flex align-items-center">
+                  <Image
+                    src={
+                      mongoUser !== null
+                        ? mongoUser?.profileImage
+                        : user?.photoURL
+                    }
+                    roundedCircle
+                    width={50}
+                    height={50}
+                    className="me-2 object-fit-cover"
+                  />
+                  <NavDropdown
+                    title={
+                      mongoUser
+                        ? `Ciao, ${mongoUser.firstName} ${mongoUser.lastName}`
+                        : `Ciao, ${user?.displayName}`
+                    }
+                    id="basic-nav-dropdown"
+                    align="end"
                     style={{ fontSize: "13pt" }}
+                    variant="dark"
                   >
-                    Dashboard User
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  {mongoUser?.role === "admin" && (
                     <NavDropdown.Item
-                    as={Link}
-                    to="/exercises/create"
-                    onClick={handleNavigation}
-                    style={{ fontSize: "13pt" }}
-                  >
-                    Add a new exercise
-                  </NavDropdown.Item>
-                  )}
-                  <NavDropdown.Item
-                    as={Link}
-                    to="/blogPosts/create"
-                    onClick={handleNavigation}
-                    style={{ fontSize: "13pt" }}
-                  >
-                    My Training Plan
-                  </NavDropdown.Item>
-                  <NavDropdown.Item
-                    as={Link}
-                    to="/my-posts"
-                    onClick={handleNavigation}
-                    style={{ fontSize: "13pt" }}
-                  >
-                    My Exercise
-                  </NavDropdown.Item>
+                      as={Link}
+                      to="/dashboard"
+                      onClick={handleNavigation}
+                      style={{ fontSize: "13pt" }}
+                    >
+                      Dashboard User
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    {mongoUser?.role === "admin" && (
+                      <NavDropdown.Item
+                        as={Link}
+                        to="/exercises/create"
+                        onClick={handleNavigation}
+                        style={{ fontSize: "13pt" }}
+                      >
+                        Add a new exercise
+                      </NavDropdown.Item>
+                    )}
+                    <NavDropdown.Item
+                      as={Link}
+                      to="/blogPosts/create"
+                      onClick={handleNavigation}
+                      style={{ fontSize: "13pt" }}
+                    >
+                      My Training Plan
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      as={Link}
+                      to="/my-posts"
+                      onClick={handleNavigation}
+                      style={{ fontSize: "13pt" }}
+                    >
+                      My Exercise
+                    </NavDropdown.Item>
 
-                  <NavDropdown.Item
-                    as={Link}
-                    to="/profile"
-                    onClick={handleNavigation}
-                    style={{ fontSize: "13pt" }}
-                  >
-                    Manage Profile
-                  </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item
-                    onClick={handleLogout}
-                    style={{ fontSize: "13pt" }}
-                  >
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              </div>
-            </>
-          </Nav>
+                    <NavDropdown.Item
+                      as={Link}
+                      to="/profile"
+                      onClick={handleNavigation}
+                      style={{ fontSize: "13pt" }}
+                    >
+                      Manage Profile
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item
+                      onClick={handleLogout}
+                      style={{ fontSize: "13pt" }}
+                    >
+                      Logout
+                    </NavDropdown.Item>
+                  </NavDropdown>
+                </div>
+              </>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>

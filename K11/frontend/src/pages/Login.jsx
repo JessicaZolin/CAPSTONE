@@ -22,6 +22,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { googleSignIn, emailAndPasswordSingIn, user, token } = UserAuth();
+  console.log("token: ", token, "user: ", user);
 
   // -------------------------------------------------------- Handle form login with email and password
   const onSubmit = async (e) => {
@@ -88,8 +89,10 @@ const Login = () => {
   // -------------------------------------------------------- Handle redirect result from Google sign-in
 
   useEffect(() => {
-    if (user != null) {
+    if (user !== null && user !== undefined) {
       navigate("/");
+    } else {
+      navigate("/login");
     }
   }, [user]);
 
@@ -118,7 +121,7 @@ const Login = () => {
           <Button
             type="submit"
             as={Link}
-            to="/"
+            to="/welcome"
             className="align-self-start mb-3 mb-md-0"
           >
             {" "}
