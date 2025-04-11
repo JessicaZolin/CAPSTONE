@@ -1,39 +1,65 @@
 import "./App.css";
 
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Welcome from "./pages/Welcome";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
-import Dashboard from "./pages/Dashboard"
+import Dashboard from "./pages/Dashboard";
 import CreateNewExercise from "./pages/CreateNewExercise";
+import ExerciseDetails from "./pages/ExerciseDetails";
 import { AuthContextProvider } from "./context/AuthContext";
+import NavBar from "./components/Navbar";
+import Footer from "./components/Footer";
+import EditExercise from "./pages/EditExercise";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   return (
     <AuthContextProvider>
-    <Router>
-      <div className="main-container">
-        <Routes>
-          {/* Protected routes */}
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/exercises/create" element={<CreateNewExercise />} />
-          </Route>
+      <Router>
+        <div className="main-container">
+          <NavBar style={{ position: "fixed", zIndex: 100 }} />
+          <div
+            className="d-flex justify-content-center"
+            style={{
+              paddingTop: "150px",
+              paddingBottom: "50px",
+              height: "100%",
+              width: "100%",
+              margin: "auto",
+            }}
+          >
+            <Routes>
+              {/* ---------------------------------  Protected routes -------------------------------- */}
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/user-profile" element={<UserProfile />} />
+                <Route
+                  path="/exercises/:exerciseId"
+                  element={<ExerciseDetails />}
+                />
+                <Route
+                  path="/exercises/create"
+                  element={<CreateNewExercise />}
+                />
+                <Route
+                  path="/exercises/edit/:exerciseId"
+                  element={<EditExercise />}
+                />
+              </Route>
 
-          {/* Public routes */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/welcome" element={<Welcome />} />
-        </Routes>
-      </div>
-    </Router>
+              {/* --------------------------------- Public routes -------------------------------- */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/welcome" element={<Welcome />} />
+            </Routes>
+          </div>
+          <Footer />
+        </div>
+      </Router>
     </AuthContextProvider>
   );
 }

@@ -4,7 +4,6 @@ import cors from "cors";
 import mongoose from "mongoose";
 import globalRouter from "./router.js";
 
-
 // per importare più file variabili d'ambiente .env (assegno ad ognuna un nome diverso)
 /* import dotenv from "dotenv";
 dotenv.config({ path: "./.env.staging" }); */
@@ -14,9 +13,9 @@ const server = express();
 
 // ----------------------------------- middleware
 server.use(express.json()); // per accettare richieste json
-server.use(cors()); // per accettare richieste da altri server
+server.use(cors({ origin: "*" })); // per accettare richieste da altri server
 
-server.use('/api/v1', globalRouter); // collega il server alle rotte
+server.use("/api/v1", globalRouter); // collega il server alle rotte
 
 // ----------------------------------- connessione al database
 mongoose
@@ -31,7 +30,7 @@ mongoose
 
 // ----------------------------------- metto in ascolto il server
 if (process.env.PORT) {
-  server.listen(process.env.PORT, () => {
+  server.listen(process.env.PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${process.env.PORT}`);
   });
 } else {

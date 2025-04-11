@@ -1,9 +1,13 @@
 .main-container {
-  background: rgb(236,6,30);
   background: linear-gradient(162deg, rgba(236,6,30,1) 10%, rgba(239,246,244,1) 59%, rgba(24,0,34,1) 98%);
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }
+
+/* .body {
+  background: rgb(236,6,30);
+  background: linear-gradient(162deg, rgba(236,6,30,1) 10%, rgba(239,246,244,1) 59%, rgba(24,0,34,1) 98%);
+} */
