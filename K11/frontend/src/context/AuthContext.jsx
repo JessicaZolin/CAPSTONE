@@ -42,7 +42,6 @@ export const AuthContextProvider = ({ children }) => {
     // ---------------------------------------------------------------------------------------
 
     const fetchUserData = async (token) => {
-      console.log("Token:", token);
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/me`,
@@ -53,7 +52,7 @@ export const AuthContextProvider = ({ children }) => {
             },
           }
         );
-        console.log("User data from backend:", response.data);
+        // console.log("User data from backend:", response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -70,7 +69,7 @@ export const AuthContextProvider = ({ children }) => {
           setToken(token);
           const mongoUserIN = await fetchUserData(token);
           if (mongoUserIN) {
-            console.log("Mongo user:", mongoUserIN);
+            // console.log("Mongo user:", mongoUserIN);
             setMongoUser(mongoUserIN);
             setLoading(false);
           }

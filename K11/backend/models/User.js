@@ -30,6 +30,14 @@ const userSchema = new Schema({
         required: true,
         unique: true,
     },
+    MedicalCertificate: {
+        type: Date,
+        default: "No certificate",
+    },
+    AboExpiration: {
+        type: Date,
+        default: "No subscription",
+    },
 }, {
     timestamps: true,
 });

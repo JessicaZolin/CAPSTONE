@@ -17,6 +17,7 @@ import UserProfile from "./pages/UserProfile";
 import AdminRoutes from "./pages/AdminRoutes";
 import AdminDashboard from "./pages/AdminDashboard";
 import UsersList from "./pages/UsersList";
+import AdminManageUserProfile from "./pages/AdminManageUserProfile";
 
 function App() {
   return (
@@ -59,6 +60,10 @@ function App() {
                 />
                 <Route path="/userslist" element={<UsersList />} />
               </Route>
+              <Route
+                path="/admin-manage-user-profile/:userId"
+                element={<AdminManageUserProfile />}
+              />
 
               {/* --------------------------------- Public routes -------------------------------- */}
               <Route path="/login" element={<Login />} />

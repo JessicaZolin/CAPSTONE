@@ -73,15 +73,16 @@ export async function readMultipleUsers(request, response, next) {
       .sort({ lastName: "ascending" })
       .skip(skip)
       .limit(limitPerPage);
-      
+
     console.log(users);
-    response.send({page,
+    response.send({
+      page,
       currentPage: page,
       limitPerPage,
       totalPages,
       totalResources: totalUsers,
       users,
-  });
+    });
   } catch (error) {
     console.log(error);
     response.status(500).json({ message: "Internal Server Error" });
@@ -91,4 +92,36 @@ export async function readMultipleUsers(request, response, next) {
 // -------------------------------------------------------------------------------------------------------------
 
 // read single user
-export async function readSingleUser(request, response, next) {}
+export async function readSingleUser(request, response, next) {
+  try {
+    const user = await User.findById(request.params.userId);
+
+    if (!user) {
+      return response.status(404).json({ message: "User not found" });
+    }
+    response.send(user);
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ message: "Internal Server Error" });
+  }
+}
+
+// -------------------------------------------------------------------------------------------------------------
+
+// update single user
+export async function updateSingleUser(request, response, next) {
+  const { userId } = request.params;
+
+  /* const { firstName, lastName, MedicalCertificate, AboExpiration } = request.body.formDataToSend; */
+  console.log(userId);
+  console.log(request.body);
+  try {
+    const updatedUser = await User.findByIdAndUpdate(userId, request.body, {
+      new: true,
+    });
+    response.send(updatedUser);
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ message: "Internal Server Error" });
+  }
+}

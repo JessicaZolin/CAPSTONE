@@ -16,7 +16,7 @@ const ExerciseCard = ({ exercise }) => {
         style={{ height: "200px", objectFit: "cover" }}
       />
       <Card.Body>
-        <Card.Title /* style={{ height: "30%" }} */>{exercise.name}</Card.Title>
+        <Card.Title>{exercise.name}</Card.Title>
       </Card.Body>
     </Card>
   );

@@ -43,7 +43,8 @@ router.delete('/me', verifyToken, userController.destroyAuthUser)
 // ROUTE FOR THE ADMIN
 
 router.get('/users', userController.readMultipleUsers)
-// router.get('/users/:userId', /* verifyToken, userController.readSingleUser */)
+router.get('/users/:userId', userController.readSingleUser)
+router.patch('/users/:userId', userController.updateSingleUser)
 
 // ---------------------------------------------------------------------------------------------------------------
 

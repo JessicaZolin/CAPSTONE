@@ -1,4 +1,11 @@
-import { Container, Row, Button, Col, Pagination } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Button,
+  Col,
+  Pagination,
+  Spinner,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
@@ -16,14 +23,15 @@ function UsersList() {
   const [totalPages, setTotalPages] = useState(0);
 
   const fetchUsers = async () => {
+    setLoading(true);
     try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/users?page=${currentPage}&limitPerPage=6`
-    );
-    console.log(response.data.users);
-    setUsers(response.data.users);
-    setTotalPages(response.data.totalPages); 
-    setError(null);
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/users?page=${currentPage}&limitPerPage=6`
+      );
+      console.log(response.data.users);
+      setUsers(response.data.users);
+      setTotalPages(response.data.totalPages);
+      setError(null);
     } catch (error) {
       console.log("Error fetching users:", error);
       setError(error.message);
@@ -56,27 +64,28 @@ function UsersList() {
             d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
           />
         </svg>
-        Back to Dashboard
+        Back to the Admin Dashboard
       </Button>
 
       <Container className="my-5">
-        {loading && <p>Loading...</p>}
-        {error && <p className="text-danger">{error}</p>}
+        <div className="d-flex justify-content-center align-items-center">
+          {loading && (
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          )}
+          {error && <p className="text-danger">{error}</p>}
+        </div>
         <Row xs={1} md={2} className="g-4">
-          {!loading ? (
+          {!loading &&
             users.map((user) => (
               <Col key={user._id} xs={12} md={6} lg={4} className="mb-5">
                 <UserCard user={user} />
               </Col>
-            ))
-          ) : (
-            <Col>
-              <p>No users found.</p>
-            </Col>
-          )}
+            ))}
         </Row>
 
-        {totalPages > 1 && (
+        {!loading &&totalPages > 1 && (
           <Row>
             <Col className="d-flex justify-content-center my-4">
               <Pagination className="m-0">
