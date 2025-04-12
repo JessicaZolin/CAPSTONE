@@ -82,7 +82,7 @@ const UserProfile = () => {
       setError("");
       setPreviewUrl("");
       setProfileImage(null);
-      navigate("/dashboard");
+      navigate("/user-dashboard");
       setMongoUser(response.data);
     } catch (error) {
       setError(
@@ -129,7 +129,7 @@ const UserProfile = () => {
     <div className="container">
       <Button
         className="container-main align-items-center color-button-546a76-bg-white"
-        onClick={() => navigate("/dashboard")}
+        onClick={() => navigate("/user-dashboard")}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

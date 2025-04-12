@@ -61,10 +61,27 @@ export async function destroyAuthUser(request, response, next) {
 
 // read multiple users
 export async function readMultipleUsers(request, response, next) {
+  const page = parseInt(request.query.page) || 1;
+  const limitPerPage = parseInt(request.query.limit) || 6;
+  if (limitPerPage > 6) limitPerPage = 6;
+  const skip = (page - 1) * limitPerPage;
+
+  const totalUsers = await User.countDocuments();
+  const totalPages = Math.ceil(totalUsers / limitPerPage);
   try {
-    const users = await User.find().sort({ createdAt: -1 });
+    const users = await User.find()
+      .sort({ lastName: "ascending" })
+      .skip(skip)
+      .limit(limitPerPage);
+      
     console.log(users);
-    response.send(users);
+    response.send({page,
+      currentPage: page,
+      limitPerPage,
+      totalPages,
+      totalResources: totalUsers,
+      users,
+  });
   } catch (error) {
     console.log(error);
     response.status(500).json({ message: "Internal Server Error" });

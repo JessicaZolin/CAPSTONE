@@ -107,7 +107,7 @@ const NavBar = () => {
               </Col>
             </Row>
           </Form>*/}
-          {user && mongoUser && (
+          {user && (
             <Nav className="mt-2 mt-lg-0 ms-auto">
               <>
                 <div className="d-flex align-items-center">
@@ -182,7 +182,7 @@ const NavBar = () => {
 
                     <NavDropdown.Item
                       as={Link}
-                      to="/profile"
+                      to="/user-profile"
                       onClick={handleNavigation}
                       style={{ fontSize: "13pt" }}
                     >
