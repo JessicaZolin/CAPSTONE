@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const UserProfile = () => {
-  const { user, mongoUser, token, setMongoUser } = UserAuth();
+  const { user, mongoUser, token, setMongoUser, setUser } = UserAuth();
   console.log(mongoUser);
   const [formData, setFormData] = useState({
     firstName: mongoUser?.firstName || "",
@@ -24,7 +24,7 @@ const UserProfile = () => {
     if (file) {
       setProfileImage(file);
       setPreviewUrl(URL.createObjectURL(file));
-      console.log(file)
+      console.log(file);
     }
   };
 
@@ -42,7 +42,7 @@ const UserProfile = () => {
     });
   };
 
-  // -------------------------- Function to handle profile update --------------------------
+  // ---------------------------- Function to handle profile update ----------------------------
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
     try {
@@ -54,7 +54,7 @@ const UserProfile = () => {
         console.log(profileImage, {
           name: profileImage.name,
           type: profileImage.type,
-          size: profileImage.size
+          size: profileImage.size,
         });
         formDataToSend.append("profileImage", profileImage);
       }
@@ -67,7 +67,6 @@ const UserProfile = () => {
           console.log(`${pair[0]}: ${pair[1]}`);
         }
       }
-
 
       const response = await axios.patch(
         `${process.env.REACT_APP_BACKEND_URL}/me/image`,
@@ -92,6 +91,36 @@ const UserProfile = () => {
       );
       // console.log(error);
       setSuccess("");
+    }
+  };
+
+  // ---------------------------- Function to handle form submit ----------------------------
+
+  const handleDeleteProfile = async () => {
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}/me`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      setSuccess("Profile deleted successfully.");
+      setError("");
+      setPreviewUrl("");
+      setProfileImage(null);
+      /*  navigate("/welcome") */ setMongoUser(null);
+      setUser(null);
+    } catch (error) {
+      setError(
+        error?.response?.data?.message ||
+          "Something went wrong while deleting profile."
+      );
+      // console.log(error);
+      setSuccess("");
+    } finally {
+      return navigate("/welcome");
     }
   };
 
@@ -125,7 +154,17 @@ const UserProfile = () => {
         <Row className="justify-content-center">
           <Col md={6}>
             {/* -------------------------- manage profile -------------------------- */}
-            <h2 className="title">Manage Profile</h2>
+            <div className="d-flex justify-content-between">
+              <h2 className="title">Manage Profile</h2>
+              <Button
+                type="submit"
+                variant="danger"
+                onClick={handleDeleteProfile}
+              >
+                Delete Profile
+              </Button>
+            </div>
+
             {error && <Alert variant="danger">{error}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
             <Form onSubmit={handleProfileUpdate}>

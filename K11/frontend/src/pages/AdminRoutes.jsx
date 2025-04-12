@@ -2,9 +2,9 @@ import { UserAuth } from "../context/AuthContext";
 import { Spinner } from "react-bootstrap";
 import { Navigate, Outlet } from "react-router-dom";
 
-const ProtectedRoutes = () => {
-  const { user, loading } = UserAuth();
-  console.log(user, loading);
+const AdminRoutes = () => {
+  const { user, loading, mongoUser } = UserAuth();
+  console.log(user, loading, mongoUser);
 
   if (loading) {
     return (
@@ -18,6 +18,10 @@ const ProtectedRoutes = () => {
     return <Navigate to="/welcome" replace />;
   }
 
+  if (mongoUser.role !== "admin") {
+    return <Navigate to="/" replace />;
+  }
+
   return (
     <>
       <Outlet />
@@ -25,4 +29,4 @@ const ProtectedRoutes = () => {
   );
 };
 
-export default ProtectedRoutes;
+export default AdminRoutes;

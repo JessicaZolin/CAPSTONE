@@ -76,7 +76,7 @@ const CreateNewExercise = () => {
     <div className="container">
       <Button
         className="container-main align-items-centercolor-button-546a76-bg-white"
-        onClick={() => navigate("/dashboard")}
+        onClick={() => navigate("/admin-dashboard")}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

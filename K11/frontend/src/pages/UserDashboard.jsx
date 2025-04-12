@@ -39,18 +39,7 @@ function UserDashboard() {
           
         </Row>
         <Row>
-          {mongoUser.role === "admin" && (
-            <Card
-            className="shadow mb-3 background-card selected"
-            onClick={() => navigate(`/exercises/create`)}
-            style={{ cursor: "pointer" }}
-          >
-            <Card.Body>
-              <Card.Title>Exercises</Card.Title>
-              <Card.Text>Create a new exercise</Card.Text>
-            </Card.Body>
-          </Card>
-          )}
+          
           <Card
             className="shadow mb-3 background-card selected"
             onClick={() => navigate(`/blogPosts/create`)}  // TIDOOOOO

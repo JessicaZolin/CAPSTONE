@@ -133,14 +133,25 @@ const NavBar = () => {
                     style={{ fontSize: "13pt" }}
                     variant="dark"
                   >
+                    {mongoUser?.role === "admin" ? (
+                      <NavDropdown.Item
+                        as={Link}
+                        to="/admin-dashboard"
+                        onClick={handleNavigation}
+                        style={{ fontSize: "13pt" }}
+                      >
+                        Dashboard Admin
+                      </NavDropdown.Item>
+                    ) : (
                     <NavDropdown.Item
                       as={Link}
-                      to="/dashboard"
+                      to="/user-dashboard"
                       onClick={handleNavigation}
                       style={{ fontSize: "13pt" }}
                     >
                       Dashboard User
                     </NavDropdown.Item>
+                    )}
                     <NavDropdown.Divider />
                     {mongoUser?.role === "admin" && (
                       <NavDropdown.Item

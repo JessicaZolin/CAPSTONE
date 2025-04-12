@@ -22,7 +22,6 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { googleSignIn, emailAndPasswordSingIn, user, token } = UserAuth();
-  console.log("token: ", token, "user: ", user);
 
   // -------------------------------------------------------- Handle form login with email and password
   const onSubmit = async (e) => {
