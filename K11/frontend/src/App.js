@@ -16,6 +16,7 @@ import EditExercise from "./pages/EditExercise";
 import UserProfile from "./pages/UserProfile";
 import AdminRoutes from "./pages/AdminRoutes";
 import AdminDashboard from "./pages/AdminDashboard";
+import UsersList from "./pages/UsersList";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
                   path="/exercises/edit/:exerciseId"
                   element={<EditExercise />}
                 />
+                <Route path="/userslist" element={<UsersList />} />
               </Route>
 
               {/* --------------------------------- Public routes -------------------------------- */}

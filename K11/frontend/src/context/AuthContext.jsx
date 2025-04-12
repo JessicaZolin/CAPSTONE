@@ -42,6 +42,7 @@ export const AuthContextProvider = ({ children }) => {
     // ---------------------------------------------------------------------------------------
 
     const fetchUserData = async (token) => {
+      console.log("Token:", token);
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_BACKEND_URL}/me`,
@@ -52,6 +53,7 @@ export const AuthContextProvider = ({ children }) => {
             },
           }
         );
+        console.log("User data from backend:", response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -68,6 +70,7 @@ export const AuthContextProvider = ({ children }) => {
           setToken(token);
           const mongoUserIN = await fetchUserData(token);
           if (mongoUserIN) {
+            console.log("Mongo user:", mongoUserIN);
             setMongoUser(mongoUserIN);
             setLoading(false);
           }
@@ -76,7 +79,6 @@ export const AuthContextProvider = ({ children }) => {
           setToken(null);
           setMongoUser(null);
           setLoading(false);
-          // setLoading(false);
         }
       } catch (error) {
         console.log("User state changed error:", error);
@@ -97,12 +99,9 @@ export const AuthContextProvider = ({ children }) => {
     };
   }, []);
 
-  //
-  //
-  //
-  //
+  // -------------------------------------------------------------------------------------------------------------
 
-  // -------------------------------------------------------- Google Sign In
+  // Google Sign In
   const googleSignIn = async () => {
     try {
       // create a new instance of GoogleAuthProvider and set the opportunity to choose the user every time the user use this authentication method
@@ -111,14 +110,13 @@ export const AuthContextProvider = ({ children }) => {
         prompt: "select_account",
       });
 
-      // ------------------------------------------------------------ call the signInWithPopup function
+      // --------------- call the signInWithPopup function
       const userCredential = await signInWithPopup(auth, provider);
 
       // get the Token from the userCredential
       const findedToken = await userCredential.user.getIdToken();
 
-      //
-      // ------------------------------------------------------------ call the backend function to save the data on Mongo DB
+      // --------------- call the backend function to save the data on Mongo DB
       if (userCredential.user && findedToken) {
         const backendResponse = await axios.post(
           `${process.env.REACT_APP_BACKEND_URL}/login-google`,
@@ -147,12 +145,9 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  //
-  //
-  //
-  //
+  // -------------------------------------------------------------------------------------------------------------
 
-  // -------------------------------------------------------- Email/Password registration
+  // Email/Password registration
   const registerWithEmailAndPassword = async (
     email,
     password,
@@ -206,15 +201,12 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  //
-  //
-  //
-  //
+  // -------------------------------------------------------------------------------------------------------------
 
-  // -------------------------------------------------------- Email/Password login
+  // Email/Password login
   const emailAndPasswordSingIn = async (email, password) => {
     try {
-      // ------------------------------------------------------------ call the signInWithEmailAndPassword function
+      // ----------------- call the signInWithEmailAndPassword function
       const userCredential = await signInWithEmailAndPassword(
         auth, // the first parameter requires a reference to the service the fuunction is operating on (here auth)
         email,
@@ -229,12 +221,9 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
-  //
-  //
-  //
-  //
+  // -------------------------------------------------------------------------------------------------------------
 
-  // -------------------------------------------------------- Logout
+  // Logout
   const logOut = async () => {
     try {
       // call the signOut function

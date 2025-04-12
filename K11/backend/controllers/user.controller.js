@@ -60,7 +60,16 @@ export async function destroyAuthUser(request, response, next) {
 // -------------------------------------------------------------------------------------------------------------
 
 // read multiple users
-export async function readMultipleUsers(request, response, next) {}
+export async function readMultipleUsers(request, response, next) {
+  try {
+    const users = await User.find().sort({ createdAt: -1 });
+    console.log(users);
+    response.send(users);
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ message: "Internal Server Error" });
+  }
+}
 
 // -------------------------------------------------------------------------------------------------------------
 

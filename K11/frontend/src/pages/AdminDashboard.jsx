@@ -83,7 +83,7 @@ function AdminDashboard() {
           <div className="d-flex justify-content-between gap-5">
             <Card
               className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/exercises/create`)}
+              onClick={() => navigate(`/userslist`)}
               style={{ cursor: "pointer" }}
             >
               <Card.Body>
