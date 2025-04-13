@@ -1,10 +1,12 @@
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+
 const ExerciseCard = ({ exercise }) => {
   const navigate = useNavigate();
 
   return (
+    <>
     <Card xs={12} md={6} lg={4}
       className="shadow mb-3 border border-dark background-card"
       onClick={() => navigate(`/exercises/${exercise._id}`)}
@@ -19,6 +21,7 @@ const ExerciseCard = ({ exercise }) => {
         <Card.Title>{exercise.name}</Card.Title>
       </Card.Body>
     </Card>
+    </>
   );
 };
 

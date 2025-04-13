@@ -4,6 +4,7 @@ import { verifyToken } from "./middlewares/authorization.js";
 import * as authController from "./controllers/auth.controller.js";
 import * as userController from "./controllers/user.controller.js";
 import * as exerciseController from "./controllers/exercise.controller.js";
+import * as exerciseLogController from "./controllers/exerciseLog.controller.js";
 
 const router = Router();
 
@@ -55,6 +56,16 @@ router.get('/exercises', exerciseController.readMultipleExercises)
 router.get('/exercises/:exerciseId', exerciseController.readSingleExercise)
 router.patch('/exercises/:exerciseId', uploadCloudinary.single("cover"), exerciseController.updateSingleExercise)
 router.delete('/exercises/:exerciseId', exerciseController.destroySingleExercise)
+
+
+// ---------------------------------------------------------------------------------------------------------------
+
+// ROUTE FOR THE USER EXERCISES
+router.post('/exercises/:exerciseId', exerciseLogController.createExerciseLog);
+router.get('/exercises/:exerciseId/:userId', exerciseLogController.readSingleUserExerciseLog);
+router.delete('/exercises/:exerciseId/:logId', exerciseLogController.destroySingleUserExerciseLog);
+//router.get('/user-exercises/:exerciseId', verifyToken, exerciseController.readSingleUserExercise);
+//router.patch('/user-exercises/:exerciseId', verifyToken, exerciseController.updateSingleUserExercise) 
 
 export default router;
 

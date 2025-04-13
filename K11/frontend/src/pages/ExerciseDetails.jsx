@@ -2,7 +2,7 @@ import { Container, Row, Col, Button, Alert, Badge } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-/* import Comments from "../components/Comments"; */
+import Weight from "../components/Weight";
 import axios from "axios";
 
 
@@ -132,11 +132,11 @@ const ExerciseDetails = () => {
                 />
               </Col>
             </Row>
-          {/*   <Row>
+            <Row>
               <Col xs={12} md={8}>
-                <Comments id={post._id} />
+                <Weight id={exercise._id} />
               </Col>
-            </Row> */}
+            </Row>
           </>
         )}
       </Container>

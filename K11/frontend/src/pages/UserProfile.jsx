@@ -129,7 +129,9 @@ const UserProfile = () => {
     <div className="container">
       <Button
         className="container-main align-items-center color-button-546a76-bg-white"
-        onClick={() => navigate("/user-dashboard")}
+        onClick={() => {
+          mongoUser?.role === "admin" ? navigate("/admin-dashboard") : navigate("/user-dashboard");
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -144,7 +146,9 @@ const UserProfile = () => {
             d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
           />
         </svg>
-        Back to the User Dashboard
+        {mongoUser?.role === "admin"
+          ? "Back to the Admin Dashboard"
+          : "Back to the User Dashboard"}
       </Button>
 
       <Container

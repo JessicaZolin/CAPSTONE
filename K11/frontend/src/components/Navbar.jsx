@@ -1,14 +1,4 @@
-import {
-  Navbar,
-  Container,
-  Nav,
-  NavDropdown,
-  Image,
-  Form,
-  Button,
-  Col,
-  Row,
-} from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Image } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 /* import { useSearch } from "../context/SearchContext"; */
@@ -133,6 +123,7 @@ const NavBar = () => {
                     style={{ fontSize: "13pt" }}
                     variant="dark"
                   >
+                    {/* DASHBOARD */}
                     {mongoUser?.role === "admin" ? (
                       <NavDropdown.Item
                         as={Link}
@@ -143,43 +134,19 @@ const NavBar = () => {
                         Dashboard Admin
                       </NavDropdown.Item>
                     ) : (
-                    <NavDropdown.Item
-                      as={Link}
-                      to="/user-dashboard"
-                      onClick={handleNavigation}
-                      style={{ fontSize: "13pt" }}
-                    >
-                      Dashboard User
-                    </NavDropdown.Item>
-                    )}
-                    <NavDropdown.Divider />
-                    {mongoUser?.role === "admin" && (
                       <NavDropdown.Item
                         as={Link}
-                        to="/exercises/create"
+                        to="/user-dashboard"
                         onClick={handleNavigation}
                         style={{ fontSize: "13pt" }}
                       >
-                        Add a new exercise
+                        Dashboard User
                       </NavDropdown.Item>
                     )}
-                    <NavDropdown.Item
-                      as={Link}
-                      to="/blogPosts/create"
-                      onClick={handleNavigation}
-                      style={{ fontSize: "13pt" }}
-                    >
-                      My Training Plan
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      as={Link}
-                      to="/my-posts"
-                      onClick={handleNavigation}
-                      style={{ fontSize: "13pt" }}
-                    >
-                      My Exercise
-                    </NavDropdown.Item>
 
+                    <NavDropdown.Divider />
+
+                    {/* MANAGE PROFILE */}
                     <NavDropdown.Item
                       as={Link}
                       to="/user-profile"
@@ -188,7 +155,10 @@ const NavBar = () => {
                     >
                       Manage Profile
                     </NavDropdown.Item>
+
                     <NavDropdown.Divider />
+
+                    {/* LOGOUT */}
                     <NavDropdown.Item
                       onClick={handleLogout}
                       style={{ fontSize: "13pt" }}
