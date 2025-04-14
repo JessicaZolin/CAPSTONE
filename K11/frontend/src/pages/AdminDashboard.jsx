@@ -62,7 +62,7 @@ function AdminDashboard() {
         </Row>
 
         {/* -------------------------------- Manage Exercises -------------------------------- */}
-        <Row>
+        <Row className="mb-5">
           <h2>Manage Exercises</h2>
           <div className="d-flex justify-content-between gap-5">
             <Card
@@ -100,7 +100,7 @@ function AdminDashboard() {
         </Row>
 
         {/* -------------------------------- Manage Users -------------------------------- */}
-        <Row>
+        <Row className="mb-5">
           <h2>Manage User</h2>
           <div className="d-flex justify-content-between gap-5">
             {/* --------- USERS --------- */}
