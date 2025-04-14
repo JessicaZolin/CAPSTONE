@@ -3,8 +3,8 @@ import { Spinner } from "react-bootstrap";
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoutes = () => {
-  const { user, loading, mongoUser } = UserAuth();
-  console.log(user, loading, mongoUser);
+  const { user, loading, mongoUser, token } = UserAuth();
+  console.log(user, loading, mongoUser, token);
 
   if (loading) {
     return (

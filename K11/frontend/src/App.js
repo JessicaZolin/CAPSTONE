@@ -18,6 +18,7 @@ import AdminRoutes from "./pages/AdminRoutes";
 import AdminDashboard from "./pages/AdminDashboard";
 import UsersList from "./pages/UsersList";
 import AdminManageUserProfile from "./pages/AdminManageUserProfile";
+import MyExercise from "./pages/MyExercise";
 
 function App() {
   return (
@@ -44,6 +45,10 @@ function App() {
                 <Route
                   path="/exercises/:exerciseId"
                   element={<ExerciseDetails />}
+                />
+                <Route
+                  path="/my-exercises"
+                  element={<MyExercise />}
                 />
               </Route>
 

@@ -4,7 +4,6 @@ import User from "../models/User.js";
 // register a new user
 export async function register(request, response, next) {
 
-  console.log(request.body)
   // get the user from the request
   const { email, displayName, photoURL} = request.body.user;
 

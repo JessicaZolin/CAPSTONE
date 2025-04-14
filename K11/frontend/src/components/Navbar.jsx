@@ -47,7 +47,7 @@ const NavBar = () => {
       onToggle={(isexpanded) => setExpanded(isexpanded)}
       variant="dark"
       style={{
-        height: "100px",
+        minHeight: "100px",
         backgroundImage:
           "url(https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg)",
         backgroundPosition: "center",
@@ -64,13 +64,14 @@ const NavBar = () => {
             style={{ width: "80px", height: "80px" }}
           />
         </Navbar.Brand> */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav>
+        <Nav>
             <Nav.Link as={Link} to="/" onClick={handleNavigation}>
-              <h3 className="m-0">BE YOUR BEST SELF</h3>
+              <h3 className="m-0 fs-5 d-none d-md-block">BE YOUR BEST SELF</h3>
             </Nav.Link>
           </Nav>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          
 
           {/*<Form className="m-auto" // onSubmit={handleSearch}>}
             <Row className="d-flex flex-nowrap">
@@ -120,7 +121,7 @@ const NavBar = () => {
                     }
                     id="basic-nav-dropdown"
                     align="end"
-                    style={{ fontSize: "13pt" }}
+                    style={{ fontSize: "13pt"}}
                     variant="dark"
                   >
                     {/* DASHBOARD */}

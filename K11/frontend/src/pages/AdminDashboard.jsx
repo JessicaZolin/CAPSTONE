@@ -81,6 +81,7 @@ function AdminDashboard() {
         <Row>
           <h2>Manage User</h2>
           <div className="d-flex justify-content-between gap-5">
+            {/* --------- USERS --------- */}
             <Card
               className="col shadow mb-3 background-card selected"
               onClick={() => navigate(`/userslist`)}
@@ -92,9 +93,10 @@ function AdminDashboard() {
               </Card.Body>
             </Card>
 
+            {/* --------- USERS TRAINING PLANS --------- */}
             <Card
               className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/exercises/create`)}
+              onClick={() => navigate(`/exercises`)}   // TODOOOOOOOOO
               style={{ cursor: "pointer" }}
             >
               <Card.Body>
@@ -103,9 +105,10 @@ function AdminDashboard() {
               </Card.Body>
             </Card>
 
+            {/* --------- USERS EXERCISES --------- */}
             <Card
               className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/exercises/create`)}
+              onClick={() => navigate(`/exercises`)} // TODOOOOOOOOO
               style={{ cursor: "pointer" }}
             >
               <Card.Body>
@@ -120,9 +123,10 @@ function AdminDashboard() {
         <Row>
           <h2>Manage My Profile</h2>
           <div className="d-flex justify-content-between gap-5">
+            {/* --------- MY TRAINING PLAN -------- */}
             <Card
               className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/blogPosts/create`)} // TIDOOOOO
+              onClick={() => navigate(`/blogPosts/create`)} // TODOOOOO
               style={{ cursor: "pointer" }}
             >
               <Card.Body>
@@ -131,9 +135,10 @@ function AdminDashboard() {
               </Card.Body>
             </Card>
 
+            {/* ----------- MY EXERCISES ----------- */}
             <Card
               className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/my-posts`)}
+              onClick={() => navigate(`/my-exercises`)}
               style={{ cursor: "pointer" }}
             >
               <Card.Body>
@@ -142,6 +147,7 @@ function AdminDashboard() {
               </Card.Body>
             </Card>
 
+            {/* ----------- MY PROFILE ----------- */}
             <Card
               className="col shadow mb-3 background-card selected"
               onClick={() => navigate(`/user-profile`)}

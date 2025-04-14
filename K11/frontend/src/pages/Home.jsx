@@ -40,6 +40,7 @@ const Home = () => {
         {loading && <p>Loading...</p>}
         {error && <p className="text-danger">{error}</p>}
         <Row style={{ height: "100%"}} className="d-flex align-items-center">
+          <h3 className="mb-3">Exercises</h3>
           {!loading ? (
             exercises.map((exercise) => (
               <Col key={exercise._id} xs={12} md={6} lg={4} className="mb-5">

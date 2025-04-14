@@ -21,20 +21,28 @@ export async function createExercises(request, response, next) {
 
 // read multiple exercises
 export async function readMultipleExercises(request, response, next) {
-    const page = parseInt(request.query.page) || 1;
-    const limitPerPage = parseInt(request.query.limit) || 6;
-    if (limitPerPage > 6) limitPerPage = 6;
-    const skip = (page - 1) * limitPerPage;
+  const page = parseInt(request.query.page) || 1;
+  const limitPerPage = parseInt(request.query.limit) || 6;
+  if (limitPerPage > 6) limitPerPage = 6;
+  const skip = (page - 1) * limitPerPage;
 
-    const totalExercises = await Exercise.countDocuments();
-    const totalPages = Math.ceil(totalExercises / limitPerPage);
+  const totalExercises = await Exercise.countDocuments();
+  const totalPages = Math.ceil(totalExercises / limitPerPage);
 
-    try {
+  try {
     const exercises = await Exercise.find()
+      .sort({ name: "ascending" })
       .skip(skip)
-      .limit(limitPerPage)
-      .sort({ createdAt: -1 });
-    response.json({ page, currentPage: page, limitPerPage, totalPages, totalResouces: totalExercises, exercises });
+      .limit(limitPerPage);
+
+    response.json({
+      page,
+      currentPage: page,
+      limitPerPage,
+      totalPages,
+      totalResouces: totalExercises,
+      exercises,
+    });
   } catch (error) {
     console.log(error);
     response.status(500).json({ message: "Internal Server Error" });
@@ -45,17 +53,17 @@ export async function readMultipleExercises(request, response, next) {
 
 // read single exercise
 export async function readSingleExercise(request, response, next) {
-    try {
-        const exercise = await Exercise.findById(request.params.exerciseId);
+  try {
+    const exercise = await Exercise.findById(request.params.exerciseId);
 
-        if (!exercise) {
-            return response.status(404).json({ message: "Exercise not found" });
-        }
-        response.send(exercise);
-    } catch (error) {
-        console.log(error);
-        response.status(500).json({ message: "Internal Server Error" });
+    if (!exercise) {
+      return response.status(404).json({ message: "Exercise not found" });
     }
+    response.send(exercise);
+  } catch (error) {
+    console.log(error);
+    response.status(500).json({ message: "Internal Server Error" });
+  }
 }
 
 // -------------------------------------------------------------------------------------------------------------

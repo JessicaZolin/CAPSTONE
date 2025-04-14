@@ -53,7 +53,7 @@ function UserDashboard() {
 
           <Card
             className="shadow mb-3 background-card selected"
-            onClick={() => navigate(`/my-posts`)}
+            onClick={() => navigate(`/my-exercises`)}
             style={{ cursor: "pointer" }}
           >
             <Card.Body>

@@ -35,7 +35,6 @@ export async function updateAuthUser(request, response, next) {
 
 // update logged in user image
 export async function updateAuthUserImage(request, response, next) {
-  console.log(request.file?.path);
   const userModified = await User.findOneAndUpdate(
     { firebaseUID: request.user.uid },
     { profileImage: request.file?.path || "" },
@@ -112,9 +111,6 @@ export async function readSingleUser(request, response, next) {
 export async function updateSingleUser(request, response, next) {
   const { userId } = request.params;
 
-  /* const { firstName, lastName, MedicalCertificate, AboExpiration } = request.body.formDataToSend; */
-  console.log(userId);
-  console.log(request.body);
   try {
     const updatedUser = await User.findByIdAndUpdate(userId, request.body, {
       new: true,

@@ -61,9 +61,10 @@ router.delete('/exercises/:exerciseId', exerciseController.destroySingleExercise
 // ---------------------------------------------------------------------------------------------------------------
 
 // ROUTE FOR THE USER EXERCISES
-router.post('/exercises/:exerciseId', exerciseLogController.createExerciseLog);
-router.get('/exercises/:exerciseId/:userId', exerciseLogController.readSingleUserExerciseLog);
-router.delete('/exercises/:exerciseId/:logId', exerciseLogController.destroySingleUserExerciseLog);
+router.post('/exerciselogs/:exerciseId', exerciseLogController.createExerciseLog);
+router.get('/exerciselogs/exercise/:exerciseId/:userId', exerciseLogController.readSingleUserExerciseLog);
+router.delete('/exerciseslogs/:exerciseId/:logId', exerciseLogController.destroySingleUserExerciseLog);
+router.get('/exerciselogs/user/:userId', exerciseLogController.readSingleUserAllExerciseLogs);
 //router.get('/user-exercises/:exerciseId', verifyToken, exerciseController.readSingleUserExercise);
 //router.patch('/user-exercises/:exerciseId', verifyToken, exerciseController.updateSingleUserExercise) 
 

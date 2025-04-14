@@ -25,7 +25,7 @@ const Weight = () => {
   const fetchSingleExerciseLog = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}/${mongoUser._id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/exercise/${exerciseId}/${mongoUser._id}`,
         {
           headers: {
             Authorization: token,
@@ -52,7 +52,6 @@ const Weight = () => {
 
     const formDataToSend = {
       user: mongoUser._id,
-      exercise: exerciseId,
       weight: {
         value: formData.weight.value,
         unit: "kg",
@@ -65,7 +64,7 @@ const Weight = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/${exerciseId}`,
         formDataToSend,
         {
           headers: {
@@ -96,7 +95,7 @@ const Weight = () => {
     const handleDelete = async (logId) => {
       try {
         await axios.delete(
-          `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}/${logId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/${exerciseId}/${logId}`,
           {
             headers: {
               Authorization: token,
