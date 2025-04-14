@@ -1,10 +1,11 @@
 import { auth } from "./firebase.js";
+import User from "../models/User.js";
 
 // verify firebase token
 export async function verifyToken(request, response, next) {
     // get the token from the headers
     const idToken = request.headers.authorization;
-    console.log(idToken);
+    console.log( "Token:", idToken);
   
     // check if the token is present in the headers
     if (!idToken) {
@@ -14,6 +15,7 @@ export async function verifyToken(request, response, next) {
     try {
       // verify the token
       const decodedToken = await auth.verifyIdToken(idToken);
+      console.log("Decoded token:", decodedToken);
   
       // add the user to the request
       request.user = decodedToken;
@@ -33,4 +35,22 @@ export async function verifyToken(request, response, next) {
     } catch (error) {
       console.log(error);
     }
+  }
+
+
+
+  // verify admin role
+  export async function verifyAdminRole(request, response, next) {
+    const { user_id } = request.user;
+    console.log("User ID:", user_id);
+    const mongoUser = await User.findOne({ firebaseUID: user_id });
+    console.log(mongoUser);
+    const { role } = mongoUser;
+    if (!mongoUser) {
+      return response.status(404).json({ message: "User not found" });
+    }
+    if (role !== "admin") {
+      return response.status(403).json({ message: "Forbidden" });
+    }
+    next();
   }

@@ -15,17 +15,13 @@ const NavBar = () => {
   /*  const [query, setQuery] = useState(""); */
   const [expanded, setExpanded] = useState(false);
 
-  // ---------------------------- Function to handle search ----------------------------
-  /*  const handleSearch = (e) => {
-      e.preventDefault();
-      setSearch(query);
-    }; */
-
   // ---------------------------- Function to handle logout and navigate to the home page ----------------------------
-  const handleLogout = () => {
-    logOut();
-    if (user === null) {
+  const handleLogout = async () => {
+    try {
+      await logOut();
       navigate("/welcome");
+    } catch (error) {
+      console.error("Error logging out:", error);
     }
   };
 
@@ -65,39 +61,12 @@ const NavBar = () => {
           />
         </Navbar.Brand> */}
         <Nav>
-            <Nav.Link as={Link} to="/" onClick={handleNavigation}>
-              <h3 className="m-0 fs-5 d-none d-md-block">BE YOUR BEST SELF</h3>
-            </Nav.Link>
-          </Nav>
+          <Nav.Link as={Link} to="/" onClick={handleNavigation}>
+            <h3 className="m-0 fs-5 d-none d-md-block">BE YOUR BEST SELF</h3>
+          </Nav.Link>
+        </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          
-
-          {/*<Form className="m-auto" // onSubmit={handleSearch}>}
-            <Row className="d-flex flex-nowrap">
-              <Col>
-                <Form.Control
-                  type="text"
-                  placeholder="Search"
-                  style={{ width: "500px", fontSize: "13pt" }}
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                    // setSearch(e.target.value); 
-                  }}
-                />
-              </Col>
-              <Col xs="auto">
-                <Button
-                  type="submit"
-                  className="color-button-a9c7d1"
-                  style={{ fontSize: "13pt" }}
-                >
-                  Search
-                </Button>
-              </Col>
-            </Row>
-          </Form>*/}
           {user && (
             <Nav className="mt-2 mt-lg-0 ms-auto">
               <>
@@ -121,7 +90,7 @@ const NavBar = () => {
                     }
                     id="basic-nav-dropdown"
                     align="end"
-                    style={{ fontSize: "13pt"}}
+                    style={{ fontSize: "13pt" }}
                     variant="dark"
                   >
                     {/* DASHBOARD */}

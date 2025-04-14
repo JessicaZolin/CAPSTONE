@@ -19,6 +19,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import UsersList from "./pages/UsersList";
 import AdminManageUserProfile from "./pages/AdminManageUserProfile";
 import MyExercise from "./pages/MyExercise";
+import AllExercise from "./pages/AllExercise";
 
 function App() {
   return (
@@ -69,6 +70,7 @@ function App() {
                 path="/admin-manage-user-profile/:userId"
                 element={<AdminManageUserProfile />}
               />
+              <Route path="/all-exercises" element={<AllExercise />} />
 
               {/* --------------------------------- Public routes -------------------------------- */}
               <Route path="/login" element={<Login />} />

@@ -31,7 +31,6 @@ function AdminDashboard() {
       </Button>
 
       <Container className="my-5">
-        {/* -------------------------------- Manage Exercises -------------------------------- */}
         <Row className="mb-3">
           <h4>
             Hello,{" "}
@@ -61,17 +60,40 @@ function AdminDashboard() {
             Here you can manage your exercises and profile.
           </p>
         </Row>
+
+        {/* -------------------------------- Manage Exercises -------------------------------- */}
         <Row>
           <h2>Manage Exercises</h2>
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between gap-5">
             <Card
               className="col shadow mb-3 background-card selected"
               onClick={() => navigate(`/exercises/create`)}
               style={{ cursor: "pointer" }}
             >
               <Card.Body>
-                <Card.Title>Exercises</Card.Title>
-                <Card.Text>Create a new exercise</Card.Text>
+                <Card.Title className="m-0">Create a new Exercise</Card.Title>
+              </Card.Body>
+            </Card>
+
+            {/* --------- USERS TRAINING PLANS --------- */}
+            <Card
+              className="col shadow mb-3 background-card selected"
+              onClick={() => navigate(`/exercises`)} // TODOOOOOOOOO
+              style={{ cursor: "pointer" }}
+            >
+              <Card.Body>
+                <Card.Title className="m-0">Add a Training Plan</Card.Title>
+              </Card.Body>
+            </Card>
+
+            {/* --------- USERS EXERCISES --------- */}
+            <Card
+              className="col shadow mb-3 background-card selected"
+              onClick={() => navigate(`/all-exercises`)} // TODOOOOOOOOO
+              style={{ cursor: "pointer" }}
+            >
+              <Card.Body>
+                <Card.Title className="m-0">See All Exercise</Card.Title>
               </Card.Body>
             </Card>
           </div>
@@ -90,30 +112,6 @@ function AdminDashboard() {
               <Card.Body>
                 <Card.Title>Users</Card.Title>
                 <Card.Text>See and manage users</Card.Text>
-              </Card.Body>
-            </Card>
-
-            {/* --------- USERS TRAINING PLANS --------- */}
-            <Card
-              className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/exercises`)}   // TODOOOOOOOOO
-              style={{ cursor: "pointer" }}
-            >
-              <Card.Body>
-                <Card.Title>Users Training Plan</Card.Title>
-                <Card.Text>Add Training Plans</Card.Text>
-              </Card.Body>
-            </Card>
-
-            {/* --------- USERS EXERCISES --------- */}
-            <Card
-              className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/exercises`)} // TODOOOOOOOOO
-              style={{ cursor: "pointer" }}
-            >
-              <Card.Body>
-                <Card.Title>Users Exercise</Card.Title>
-                <Card.Text>See and manage exercises</Card.Text>
               </Card.Body>
             </Card>
           </div>

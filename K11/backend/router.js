@@ -1,6 +1,6 @@
 import { Router } from "express";
 import uploadCloudinary from "./middlewares/cloudinary.js";
-import { verifyToken } from "./middlewares/authorization.js";
+import { verifyToken, verifyAdminRole } from "./middlewares/authorization.js";
 import * as authController from "./controllers/auth.controller.js";
 import * as userController from "./controllers/user.controller.js";
 import * as exerciseController from "./controllers/exercise.controller.js";
@@ -62,6 +62,7 @@ router.delete('/exercises/:exerciseId', exerciseController.destroySingleExercise
 
 // ROUTE FOR THE USER EXERCISES
 router.post('/exerciselogs/:exerciseId', exerciseLogController.createExerciseLog);
+router.get('/exerciseslogs/see-all', verifyToken, verifyAdminRole, exerciseLogController.readMultipleExerciseLogs);
 router.get('/exerciselogs/exercise/:exerciseId/:userId', exerciseLogController.readSingleUserExerciseLog);
 router.delete('/exerciseslogs/:exerciseId/:logId', exerciseLogController.destroySingleUserExerciseLog);
 router.get('/exerciselogs/user/:userId', exerciseLogController.readSingleUserAllExerciseLogs);
