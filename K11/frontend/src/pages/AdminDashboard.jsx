@@ -78,11 +78,11 @@ function AdminDashboard() {
             {/* --------- USERS TRAINING PLANS --------- */}
             <Card
               className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/exercises`)} // TODOOOOOOOOO
+              onClick={() => navigate(`/trainingplans/create`)} // TODOOOOOOOOO
               style={{ cursor: "pointer" }}
             >
               <Card.Body>
-                <Card.Title className="m-0">Add a Training Plan</Card.Title>
+                <Card.Title className="m-0">Create a new Training Plan</Card.Title>
               </Card.Body>
             </Card>
 
