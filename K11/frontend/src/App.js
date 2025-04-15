@@ -21,6 +21,7 @@ import AdminManageUserProfile from "./pages/AdminManageUserProfile";
 import MyExercise from "./pages/MyExercise";
 import AllExercise from "./pages/AllExercise";
 import AdminSeeUserExercises from "./pages/AdminSeeUserExercises";
+import CreateNewTrainingPlan from "./pages/CreateNewTrainingPlan";
 
 function App() {
   return (
@@ -72,6 +73,10 @@ function App() {
               <Route
                 path="/user-exercises/:userId"
                 element={<AdminSeeUserExercises />}
+              />
+              <Route
+                path="/trainingplans/create"
+                element={<CreateNewTrainingPlan />}
               />
 
               {/* --------------------------------- Public routes -------------------------------- */}

@@ -21,26 +21,11 @@ export async function createExercises(request, response, next) {
 
 // read multiple exercises
 export async function readMultipleExercises(request, response, next) {
-  const page = parseInt(request.query.page) || 1;
-  const limitPerPage = parseInt(request.query.limit) || 6;
-  if (limitPerPage > 6) limitPerPage = 6;
-  const skip = (page - 1) * limitPerPage;
-
-  const totalExercises = await Exercise.countDocuments();
-  const totalPages = Math.ceil(totalExercises / limitPerPage);
-
   try {
     const exercises = await Exercise.find()
       .sort({ name: "ascending" })
-      .skip(skip)
-      .limit(limitPerPage);
 
     response.json({
-      page,
-      currentPage: page,
-      limitPerPage,
-      totalPages,
-      totalResouces: totalExercises,
       exercises,
     });
   } catch (error) {

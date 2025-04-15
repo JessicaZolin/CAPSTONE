@@ -4,28 +4,16 @@ import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
 import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
 
-const CreateNewExercise = () => {
+const CreateNewTrainingPlan = () => {
   const [formData, setFormData] = useState({
     name: "",
-    cover: "",
     description: "",
   });
-
-  const [coverImage, setCoverImage] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState("");
   const [error, setError] = useState("");
   const { user, mongoUser, token } = UserAuth();
   const navigate = useNavigate();
   // console.log("mongoUser: ", mongoUser, "user: ", user, "token: ", token);
 
-  // ---------------------------- Function to handle cover image change ----------------------------
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setCoverImage(file);
-      setPreviewUrl(URL.createObjectURL(file));
-    }
-  };
 
   // ---------------------------- Function to handle form input changes ----------------------------
   const handleSubmit = async (e) => {
@@ -33,27 +21,22 @@ const CreateNewExercise = () => {
     try {
       // verify if the user is logged in
       if (!mongoUser || mongoUser.role !== "admin") {
-        setError("You must be logged and admin to create a new exercise.");
-        return;
-      }
-
-      if (!coverImage) {
-        setError("Please select a cover image.");
+        setError("You must be logged and admin to create a new training plan.");
         return;
       }
 
       const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
-      formDataToSend.append("cover", coverImage);
       formDataToSend.append("description", formData.description);
 
-      // Call the backend to create the exercise
+      
+      // Call the backend to create the training plan
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/exercises`,
+        `${process.env.REACT_APP_BACKEND_URL}/trainingplans`,
         formDataToSend,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
             Authorization: token,
           },
         }
@@ -99,7 +82,7 @@ const CreateNewExercise = () => {
       >
         <Row className="justify-content-center">
           <Col xs={12} md={6}>
-            <h2 className="title">Create New Exercises</h2>
+            <h2 className="title">Create New Training Plan</h2>
             {error && <Alert variant="danger">{error}</Alert>}
             <Form onSubmit={handleSubmit}>
               {/* ---------------------------- Form Name ---------------------------- */}
@@ -114,32 +97,6 @@ const CreateNewExercise = () => {
                   }
                   required
                 />
-              </Form.Group>
-
-              {/*  ---------------------------- Form Cover ---------------------------- */}
-              <Form.Group className="mb-3" controlId="cover">
-                <Form.Label>Cover Image</Form.Label>
-                <Form.Control
-                  type="file"
-                  accept="image/*"
-                  placeholder="Enter cover"
-                  onChange={handleImageChange}
-                  required
-                />
-                {previewUrl && (
-                  <img
-                    src={previewUrl}
-                    alt="Preview"
-                    className="mt-2"
-                    style={{
-                      maxWidth: "200px",
-                      display: "block",
-                      marginBottom: "1rem",
-                      boxShadow: "10px 10px 10px rgba(0,0,0,0.5)",
-                      borderRadius: "10px",
-                    }}
-                  />
-                )}
               </Form.Group>
 
               {/* ---------------------------- Form Description ---------------------------- */}
@@ -157,7 +114,7 @@ const CreateNewExercise = () => {
                 />
               </Form.Group>
               <Button className="color-button-546a76" type="submit">
-                Create Exercise
+                Create Training Plan
               </Button>
             </Form>
           </Col>
@@ -167,4 +124,4 @@ const CreateNewExercise = () => {
   );
 };
 
-export default CreateNewExercise;
+export default CreateNewTrainingPlan;

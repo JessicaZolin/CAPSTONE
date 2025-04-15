@@ -5,6 +5,7 @@ import * as authController from "./controllers/auth.controller.js";
 import * as userController from "./controllers/user.controller.js";
 import * as exerciseController from "./controllers/exercise.controller.js";
 import * as exerciseLogController from "./controllers/exerciseLog.controller.js";
+import * as trainingPlanController from "./controllers/trainingPlan.controller.js";
 
 const router = Router();
 
@@ -70,8 +71,13 @@ router.get('/exerciseslogs/see-all', verifyToken, verifyAdminRole, exerciseLogCo
 
 
 router.get('/exerciselogs/user/:userId', exerciseLogController.readSingleUserAllExerciseLogs);
-//router.get('/user-exercises/:exerciseId', verifyToken, exerciseController.readSingleUserExercise);
 //router.patch('/user-exercises/:exerciseId', verifyToken, exerciseController.updateSingleUserExercise) 
+
+
+// ---------------------------------------------------------------------------------------------------------------
+
+// ROUTE FOR THE TRAINING PLAN
+router.post('/trainingplans', verifyToken, verifyAdminRole, trainingPlanController.createTrainingPlan)
 
 export default router;
 
