@@ -24,9 +24,8 @@ const UserCard = ({ user }) => {
           <strong>Scadenza Abo:</strong> {user.AboExpiration ? new Date(user.AboExpiration).toLocaleDateString() : "No subscription"}
         </Card.Text>
       </Card.Body>
-      <Card.Footer className="d-flex justify-content-between gap-2 mb-1">
+      <Card.Footer className="d-flex justify-content-start gap-2 mb-1">
         <Button className="color-button-546a76-bg-white" onClick={() => navigate(`/Admin-manage-user-profile/${user._id}`)} >Update</Button>
-        <Button className="color-button-546a76-bg-white">Add Training </Button>
         <Button className="color-button-546a76-bg-white" onClick={() => navigate(`/user-exercises/${user._id}`)}>View Exercise</Button>
       </Card.Footer>
     </Card>
