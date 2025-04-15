@@ -22,8 +22,7 @@ export async function createExercises(request, response, next) {
 // read multiple exercises
 export async function readMultipleExercises(request, response, next) {
   try {
-    const exercises = await Exercise.find()
-      .sort({ name: "ascending" })
+    const exercises = await Exercise.find().sort({ name: "ascending" });
 
     response.json({
       exercises,

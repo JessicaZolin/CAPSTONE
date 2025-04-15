@@ -8,7 +8,7 @@ const ExerciseCard = ({ exercise }) => {
   return (
     <>
     <Card xs={12} md={6} lg={4}
-      className="shadow mb-3 border border-dark background-card"
+      className="shadow mb-3 border background-card"
       onClick={() => navigate(`/exercises/${exercise._id}`)}
       style={{ cursor: "pointer", height: "270px"}}
     >

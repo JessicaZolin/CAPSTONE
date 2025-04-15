@@ -43,7 +43,7 @@ const CreateNewTrainingPlan = () => {
       );
       if (response.data) {
         // console.log("Post created:", response.data);
-        navigate("/");
+        navigate("/admin-home");
       }
     } catch (error) {
       console.log("Error creating post:", error);

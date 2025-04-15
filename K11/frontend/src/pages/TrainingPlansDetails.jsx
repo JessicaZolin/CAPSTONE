@@ -2,47 +2,52 @@ import { Container, Row, Col, Button, Alert, Badge } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
-import Weight from "../components/Weight";
 import axios from "axios";
 
 
-const ExerciseDetails = () => {
-  const [exercise, setExercises] = useState({});
+const TrainingPlansDetails = () => {
+  const [trainingPlans, setTrainingPlans] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { exerciseId } = useParams();
+  const { trainingPlanId } = useParams();
   const navigate = useNavigate();
-  const { mongoUser } = UserAuth();
+  const { mongoUser, token } = UserAuth();
 
   // --------------------------- Function to fetch exercise details ---------------------------
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchTrainingPlans = async () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}`
+          `${process.env.REACT_APP_BACKEND_URL}/trainingplans/${trainingPlanId}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
         );
-        setExercises(response.data);
+        console.log("Training plans response:", response.data);
+        setTrainingPlans(response.data.trainingPlan);
         setError(null);
       } catch (error) {
-        console.error("Error fetching post:", error);
-        setError("Error while fetching post");
+        console.error("Error fetching training plans:", error);
+        setError("Error while fetching training plans");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPost();
-  }, [exerciseId]);
+    fetchTrainingPlans();
+  }, [trainingPlanId]);
 
   // --------------------------- Function to handle exercise deletion ---------------------------
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this exercise?")) {
+    if (window.confirm("Are you sure you want to delete this training plan?")) {
       try {
         await axios.delete(
-          `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}`
+          `${process.env.REACT_APP_BACKEND_URL}/trainingplans/${trainingPlanId}`,
         );
-        navigate("/"); // Aggiorna la lista dei post dopo la cancellazione
+        navigate("/admin-home"); // Aggiorna la lista dei post dopo la cancellazione
       } catch (error) {
         console.error("Error deleting post:", error);
         setError("Error while deleting post");
@@ -104,7 +109,7 @@ const ExerciseDetails = () => {
       >
         {loading && <p>Loading...</p>}
         {error && <Alert variant="danger">{error}</Alert>}
-        {exercise && exercise._id && (
+        {trainingPlans  && (
           <>
             <Row className="mb-4">
               <Col xs={12} md={8} style={{ minHeight: "300px" }}>
@@ -112,24 +117,21 @@ const ExerciseDetails = () => {
                   className="d-flex align-items-center pb-3 mb-2 gap-4"
                   style={{ borderBottom: "1px solid #ccc" }}
                 >
-                 {/*  <Badge className="background-badge-category me-2 p-2">
-                    {post.category}
-                  </Badge> */}
                   <small className="text-muted">
-                    {new Date(exercise.createdAt).toLocaleString().split(",")[0]}
+                    {new Date(trainingPlans.createdAt).toLocaleString().split(",")[0]}
                   </small>
                 </div>
                 <div
-                  className="d-flex justify-content-between align-items-start" /* style={{ height: '30%' }} */
+                  className="d-flex justify-content-between align-items-start"
                 >
-                  <h1 className="col-8">{exercise.name}</h1>
+                  <h1 className="col-8">{trainingPlans.name}</h1>
 
                   {/* --------------------------- verify if the user is the author of the post and show the edit and delete buttons */}
                   {isAdmin && (
                     <div className="mt-2">
                       <Button
                         className="me-2 color-button-546a76"
-                        onClick={() => navigate(`/exercises/edit/${exercise._id}`)}
+                        onClick={() => navigate(`/trainingplans/edit/${trainingPlans._id}`)}
                       >
                         Edit
                       </Button>
@@ -142,21 +144,8 @@ const ExerciseDetails = () => {
                     </div>
                   )}
                 </div>
-                <p style={{ minHeight: "50%" }}>{exercise.description}</p>
+                <p style={{ minHeight: "50%" }}>{trainingPlans.description}</p>
 
-              </Col>
-              <Col xs={12} md={4} className="d-flex justify-content-center">
-                <img
-                  src={exercise.cover}
-                  alt={exercise.title}
-                  className="img-fluid rounded shadow object-fit-cover"
-                  style={{ maxHeight: "300px", marginTop: "60px" }}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} md={8}>
-                <Weight id={exercise._id} />
               </Col>
             </Row>
           </>
@@ -166,4 +155,4 @@ const ExerciseDetails = () => {
   );
 };
 
-export default ExerciseDetails;
+export default TrainingPlansDetails;

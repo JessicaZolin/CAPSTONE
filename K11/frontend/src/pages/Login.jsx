@@ -21,7 +21,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { googleSignIn, emailAndPasswordSingIn, user, token } = UserAuth();
+  const { googleSignIn, emailAndPasswordSingIn, user, mongoUser, token } = UserAuth();
 
   // -------------------------------------------------------- Handle form login with email and password
   const onSubmit = async (e) => {
@@ -32,7 +32,6 @@ const Login = () => {
       const response = await emailAndPasswordSingIn(email, password);
 
       if (response && typeof response === "object" && response.uid) {
-        // After successful login, redirect to the home page
         navigate("/");
       } else {
         // Handle error message
@@ -82,18 +81,41 @@ const Login = () => {
     } catch (error) {
       console.log(error);
       setError(error.message || "An error occurred during login with Google");
+    } finally {
+      setIsLoading(false); // Set loading state to false
     }
   };
 
   // -------------------------------------------------------- Handle redirect result from Google sign-in
 
-  useEffect(() => {
+ /*  useEffect(() => {
     if (user !== null && user !== undefined) {
       navigate("/");
     } else {
       navigate("/login");
     }
-  }, [user]);
+  }, [user]); */
+
+  useEffect(() => {
+    const handleNavigation = () => {
+      // Check if both Firebase and MongoDB user are loaded
+      if (user && mongoUser) {
+        // Check user role and navigate accordingly
+        if (mongoUser.role === 'admin') {
+          navigate('/admin-home');
+        } else {
+          navigate('/');
+        }
+      } else if (!user) {
+        // Only navigate to login if there's no user
+        // This prevents infinite redirect loops
+        navigate('/login');
+      }
+      // Don't navigate if we're still waiting for mongoUser
+    };
+  
+    handleNavigation();
+  }, [user, mongoUser, navigate]); // Add mongoUser to dependencies
 
   const handlePasswordReset = () => {
     // Implement password reset functionality here

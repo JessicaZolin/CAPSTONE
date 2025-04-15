@@ -22,6 +22,9 @@ import MyExercise from "./pages/MyExercise";
 import AllExercise from "./pages/AllExercise";
 import AdminSeeUserExercises from "./pages/AdminSeeUserExercises";
 import CreateNewTrainingPlan from "./pages/CreateNewTrainingPlan";
+import AdminHome from "./pages/AdminHome";
+import TrainingPlansDetails from "./pages/TrainingPlansDetails";
+import EditTrainingPlan from "./pages/EditTrainingPlan";
 
 function App() {
   return (
@@ -50,10 +53,15 @@ function App() {
                   element={<ExerciseDetails />}
                 />
                 <Route path="/my-exercises" element={<MyExercise />} />
+                <Route
+                  path="/trainingplans/:trainingPlanId"
+                  element={<TrainingPlansDetails />}
+                />
               </Route>
 
               {/* --------------------------------- Admin routes -------------------------------- */}
               <Route element={<AdminRoutes />}>
+                <Route path="/admin-home" element={<AdminHome />} />
                 <Route path="/admin-dashboard" element={<AdminDashboard />} />
                 <Route
                   path="/exercises/create"
@@ -78,6 +86,11 @@ function App() {
                 path="/trainingplans/create"
                 element={<CreateNewTrainingPlan />}
               />
+              <Route
+                path="/trainingplans/edit/:trainingPlanId"
+                element={<EditTrainingPlan />}
+              />
+              
 
               {/* --------------------------------- Public routes -------------------------------- */}
               <Route path="/login" element={<Login />} />

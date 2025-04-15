@@ -78,9 +78,9 @@ router.get('/exerciselogs/user/:userId', exerciseLogController.readSingleUserAll
 
 // ROUTE FOR THE TRAINING PLAN
 router.post('/trainingplans', verifyToken, verifyAdminRole, trainingPlanController.createTrainingPlan)
+router.get('/trainingplans', trainingPlanController.readMultipleTrainingPlans)
+router.get('/trainingplans/:trainingPlanId', trainingPlanController.readSingleTrainingPlan)
+router.patch('/trainingplans/:trainingPlanId', verifyToken, verifyAdminRole, trainingPlanController.updateTrainingPlan)
+router.delete('/trainingplans/:trainingPlanId', trainingPlanController.destroySingleTrainingPlan)
 
 export default router;
-
-/* GET /users
-GET /users?q=username
-GET /users/:userId */
