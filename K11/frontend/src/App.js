@@ -20,6 +20,7 @@ import UsersList from "./pages/UsersList";
 import AdminManageUserProfile from "./pages/AdminManageUserProfile";
 import MyExercise from "./pages/MyExercise";
 import AllExercise from "./pages/AllExercise";
+import AdminSeeUserExercises from "./pages/AdminSeeUserExercises";
 
 function App() {
   return (
@@ -47,10 +48,7 @@ function App() {
                   path="/exercises/:exerciseId"
                   element={<ExerciseDetails />}
                 />
-                <Route
-                  path="/my-exercises"
-                  element={<MyExercise />}
-                />
+                <Route path="/my-exercises" element={<MyExercise />} />
               </Route>
 
               {/* --------------------------------- Admin routes -------------------------------- */}
@@ -71,6 +69,10 @@ function App() {
                 element={<AdminManageUserProfile />}
               />
               <Route path="/all-exercises" element={<AllExercise />} />
+              <Route
+                path="/user-exercises/:userId"
+                element={<AdminSeeUserExercises />}
+              />
 
               {/* --------------------------------- Public routes -------------------------------- */}
               <Route path="/login" element={<Login />} />

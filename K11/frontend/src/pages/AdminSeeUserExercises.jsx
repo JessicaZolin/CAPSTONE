@@ -1,11 +1,13 @@
 import { Card, Container, Row, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function MyExercise() {
-  const { mongoUser, token } = UserAuth();
+function AdminSeeUserExercises() {
+  const { userId } = useParams();
+  console.log(userId);
+  const { token } = UserAuth();
   const navigate = useNavigate();
   const [exercises, setExercises] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,7 +17,7 @@ function MyExercise() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/user/${mongoUser?._id}`,
+        `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/user/${userId}`,
         {
           headers: {
             Authorization: token,
@@ -27,7 +29,7 @@ function MyExercise() {
       setError(null);
     } catch (error) {
       console.error("Error fetching exercises:", error);
-      setError("Error while fetching exercises");
+      setError("User not found or no exercises tracked yet.");
     } finally {
       setLoading(false);
     }
@@ -42,9 +44,7 @@ function MyExercise() {
       <Button
         className="container-main align-items-center color-button-546a76-bg-white"
         onClick={() => {
-          mongoUser?.role === "admin"
-            ? navigate("/admin-dashboard")
-            : navigate("/user-dashboard");
+          navigate("/userslist")
         }}
       >
         <svg
@@ -60,9 +60,7 @@ function MyExercise() {
             d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
           />
         </svg>
-        {mongoUser?.role === "admin"
-          ? "Back to the Admin Dashboard"
-          : "Back to the User Dashboard"}
+        Back to the Userslist
       </Button>
 
       <Container className="mt-5">
@@ -104,4 +102,4 @@ function MyExercise() {
   );
 }
 
-export default MyExercise;
+export default AdminSeeUserExercises;

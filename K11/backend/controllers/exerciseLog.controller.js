@@ -28,13 +28,16 @@ export async function readSingleUserExerciseLog(request, response) {
   try {
     const { exerciseId, userId } = request.params;
 
-    if (
-      !mongoose.Types.ObjectId.isValid(exerciseId) ||
-      !mongoose.Types.ObjectId.isValid(userId)
-    ) {
+    if (!mongoose.Types.ObjectId.isValid(exerciseId)) {
       return response
         .status(400)
-        .json({ message: "Invalid exerciseId or userId" });
+        .json({ message: "Invalid exerciseId" });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return response
+        .status(400)
+        .json({ message: "Invalid userId" });
     }
 
     const logs = await ExerciseLog.find({
@@ -164,7 +167,7 @@ export async function readMultipleExerciseLogs(request, response) {
           from: "users",
           localField: "_id.user",
           foreignField: "_id",
-          as: "userInfo"
+          as: "userInfo",
         },
       },
 
@@ -191,16 +194,16 @@ export async function readMultipleExerciseLogs(request, response) {
                     weight: "$$log.weight",
                     notes: "$$log.notes",
                     firstName: "$userInfo.firstName",
-                    lastName: "$userInfo.lastName"
-                  }
-                }
+                    lastName: "$userInfo.lastName",
+                  },
+                },
               },
               latestLog: "$latestLog",
-              totalLogs: "$totalUserLogs"
-            }
+              totalLogs: "$totalUserLogs",
+            },
           },
-          totalExerciseLogs: { $sum: "$totalUserLogs" }
-        }
+          totalExerciseLogs: { $sum: "$totalUserLogs" },
+        },
       },
 
       // Lookup exercise details
@@ -216,14 +219,13 @@ export async function readMultipleExerciseLogs(request, response) {
       // Unwind exercise details
       { $unwind: "$exerciseDetails" },
 
-    
       // Project final shape
       {
         $project: {
           exercise: "$exerciseDetails",
           userLogs: 1,
-          totalExerciseLogs: 1
-        }
+          totalExerciseLogs: 1,
+        },
       },
 
       // Sort by exercise name

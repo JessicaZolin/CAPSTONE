@@ -27,7 +27,7 @@ const UserCard = ({ user }) => {
       <Card.Footer className="d-flex justify-content-between gap-2 mb-1">
         <Button className="color-button-546a76-bg-white" onClick={() => navigate(`/Admin-manage-user-profile/${user._id}`)} >Update</Button>
         <Button className="color-button-546a76-bg-white">Add Training </Button>
-        <Button className="color-button-546a76-bg-white">View Exercise</Button>
+        <Button className="color-button-546a76-bg-white" onClick={() => navigate(`/user-exercises/${user._id}`)}>View Exercise</Button>
       </Card.Footer>
     </Card>
   );

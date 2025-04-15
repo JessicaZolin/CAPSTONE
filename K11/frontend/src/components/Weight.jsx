@@ -64,7 +64,7 @@ const Weight = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/${exerciseId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/esercise/${exerciseId}`,
         formDataToSend,
         {
           headers: {
@@ -95,7 +95,7 @@ const Weight = () => {
     const handleDelete = async (logId) => {
       try {
         await axios.delete(
-          `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/${exerciseId}/${logId}`,
+          `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/exercise/${exerciseId}/${logId}`,
           {
             headers: {
               Authorization: token,
