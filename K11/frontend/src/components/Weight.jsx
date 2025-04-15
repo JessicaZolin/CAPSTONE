@@ -64,7 +64,7 @@ const Weight = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/esercise/${exerciseId}`,
+        `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/exercise/${exerciseId}`,
         formDataToSend,
         {
           headers: {

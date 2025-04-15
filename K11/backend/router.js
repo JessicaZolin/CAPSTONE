@@ -44,33 +44,32 @@ router.delete('/me', verifyToken, userController.destroyAuthUser)
 
 // ROUTE FOR THE ADMIN
 
-router.get('/users', userController.readMultipleUsers)
-router.get('/users/:userId', userController.readSingleUser)
-router.patch('/users/:userId', userController.updateSingleUser)
+router.get('/users', verifyToken, verifyAdminRole, userController.readMultipleUsers)
+router.get('/users/:userId', verifyToken, verifyAdminRole, userController.readSingleUser)
+router.patch('/users/:userId', verifyToken, verifyAdminRole, userController.updateSingleUser)
 
 // ---------------------------------------------------------------------------------------------------------------
 
 // ROUTE FOR THE EXERCISES
 
-router.post('/exercises', uploadCloudinary.single("cover"), exerciseController.createExercises)
-router.get('/exercises', exerciseController.readMultipleExercises)
-router.get('/exercises/:exerciseId', exerciseController.readSingleExercise)
-router.patch('/exercises/:exerciseId', uploadCloudinary.single("cover"), exerciseController.updateSingleExercise)
-router.delete('/exercises/:exerciseId', exerciseController.destroySingleExercise)
+router.post('/exercises', verifyToken, verifyAdminRole, uploadCloudinary.single("cover"), exerciseController.createExercises)
+router.get('/exercises', verifyToken, exerciseController.readMultipleExercises)
+router.get('/exercises/:exerciseId', verifyToken, exerciseController.readSingleExercise)
+router.patch('/exercises/:exerciseId', verifyToken, verifyAdminRole, uploadCloudinary.single("cover"), exerciseController.updateSingleExercise)
+router.delete('/exercises/:exerciseId', verifyToken, verifyAdminRole, exerciseController.destroySingleExercise)
 
 
 // ---------------------------------------------------------------------------------------------------------------
 
 // ROUTE FOR THE USER EXERCISES
-router.post('/exerciselogs/esercise/:exerciseId', exerciseLogController.createExerciseLog);
-router.get('/exerciselogs/exercise/:exerciseId/:userId', exerciseLogController.readSingleUserExerciseLog);
-router.delete('/exerciselogs/exercise/:exerciseId/:logId', exerciseLogController.destroySingleUserExerciseLog);
+router.post('/exerciselogs/exercise/:exerciseId', verifyToken, exerciseLogController.createExerciseLog);
+router.get('/exerciselogs/exercise/:exerciseId/:userId', verifyToken, exerciseLogController.readSingleUserExerciseLog);
+router.delete('/exerciselogs/exercise/:exerciseId/:logId', verifyToken, exerciseLogController.destroySingleUserExerciseLog);
+
+router.get('/exerciselogs/see-all', verifyToken, verifyAdminRole, exerciseLogController.readMultipleExerciseLogs);
 
 
-router.get('/exerciseslogs/see-all', verifyToken, verifyAdminRole, exerciseLogController.readMultipleExerciseLogs);
-
-
-router.get('/exerciselogs/user/:userId', exerciseLogController.readSingleUserAllExerciseLogs);
+router.get('/exerciselogs/user/:userId', verifyToken, exerciseLogController.readSingleUserAllExerciseLogs);
 //router.patch('/user-exercises/:exerciseId', verifyToken, exerciseController.updateSingleUserExercise) 
 
 
@@ -78,9 +77,9 @@ router.get('/exerciselogs/user/:userId', exerciseLogController.readSingleUserAll
 
 // ROUTE FOR THE TRAINING PLAN
 router.post('/trainingplans', verifyToken, verifyAdminRole, trainingPlanController.createTrainingPlan)
-router.get('/trainingplans', trainingPlanController.readMultipleTrainingPlans)
-router.get('/trainingplans/:trainingPlanId', trainingPlanController.readSingleTrainingPlan)
+router.get('/trainingplans', verifyToken, trainingPlanController.readMultipleTrainingPlans)
+router.get('/trainingplans/:trainingPlanId', verifyToken, trainingPlanController.readSingleTrainingPlan)
 router.patch('/trainingplans/:trainingPlanId', verifyToken, verifyAdminRole, trainingPlanController.updateTrainingPlan)
-router.delete('/trainingplans/:trainingPlanId', trainingPlanController.destroySingleTrainingPlan)
+router.delete('/trainingplans/:trainingPlanId', verifyToken, verifyAdminRole, trainingPlanController.destroySingleTrainingPlan)
 
 export default router;

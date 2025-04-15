@@ -12,7 +12,7 @@ function AdminDashboard() {
     <div className="container">
       <Button
         className="container-main align-items-center color-button-546a76-bg-white"
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/admin-home")}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -64,39 +64,75 @@ function AdminDashboard() {
         {/* -------------------------------- Manage Exercises -------------------------------- */}
         <Row className="mb-5">
           <h2>Manage Exercises</h2>
-          <div className="d-flex justify-content-between gap-5">
-            <Card
-              className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/exercises/create`)}
-              style={{ cursor: "pointer" }}
-            >
-              <Card.Body>
-                <Card.Title className="m-0">Create a new Exercise</Card.Title>
-              </Card.Body>
-            </Card>
 
-            {/* --------- USERS TRAINING PLANS --------- */}
-            <Card
-              className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/trainingplans/create`)} // TODOOOOOOOOO
-              style={{ cursor: "pointer" }}
-            >
-              <Card.Body>
-                <Card.Title className="m-0">Create a new Training Plan</Card.Title>
-              </Card.Body>
-            </Card>
+          <Row>
+            <div className="d-flex justify-content-between gap-5">
+              {/* --------- CREATE EXERCISES --------- */}
+              <Card
+                className="col shadow mb-3 background-card selected"
+                onClick={() => navigate(`/exercises/create`)}
+                style={{ cursor: "pointer" }}
+              >
+                <Card.Body>
+                  <Card.Title className="m-0">Create a new Exercise</Card.Title>
+                </Card.Body>
+              </Card>
 
-            {/* --------- USERS EXERCISES --------- */}
-            <Card
-              className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/all-exercises`)} // TODOOOOOOOOO
-              style={{ cursor: "pointer" }}
-            >
-              <Card.Body>
-                <Card.Title className="m-0">See All Exercise</Card.Title>
-              </Card.Body>
-            </Card>
-          </div>
+              {/* --------- CREATE TRAINING PLANS --------- */}
+              <Card
+                className="col shadow mb-3 background-card selected"
+                onClick={() => navigate(`/trainingplans/create`)}
+                style={{ cursor: "pointer" }}
+              >
+                <Card.Body>
+                  <Card.Title className="m-0">
+                    Create a new Training Plan
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </div>
+          </Row>
+
+          <Row>
+            <div className="d-flex justify-content-between gap-5">
+              {/* --------- ALL EXERCISES --------- */}
+              <Card
+                className="col shadow mb-3 background-card selected"
+                onClick={() => navigate(`/all-exercises`)}
+                style={{ cursor: "pointer" }}
+              >
+                <Card.Body>
+                  <Card.Title className="m-0">See All Exercise</Card.Title>
+                </Card.Body>
+              </Card>
+
+              {/* --------- ALL TRAINING PLANS --------- */}
+              <Card
+                className="col shadow mb-3 background-card selected"
+                onClick={() => navigate(`/all-trainingplans`)}
+                style={{ cursor: "pointer" }}
+              >
+                <Card.Body>
+                  <Card.Title className="m-0">
+                    See All Training Plans
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+
+              {/* --------- USERS EXERCISES --------- */}
+              <Card
+                className="col shadow mb-3 background-card selected"
+                onClick={() => navigate(`/all-exercises-with-userslog`)}
+                style={{ cursor: "pointer" }}
+              >
+                <Card.Body>
+                  <Card.Title className="m-0">
+                    See All Exercise with userslog
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </div>
+          </Row>
         </Row>
 
         {/* -------------------------------- Manage Users -------------------------------- */}
@@ -121,18 +157,6 @@ function AdminDashboard() {
         <Row>
           <h2>Manage My Profile</h2>
           <div className="d-flex justify-content-between gap-5">
-            {/* --------- MY TRAINING PLAN -------- */}
-            <Card
-              className="col shadow mb-3 background-card selected"
-              onClick={() => navigate(`/blogPosts/create`)} // TODOOOOO
-              style={{ cursor: "pointer" }}
-            >
-              <Card.Body>
-                <Card.Title>My Training Plan</Card.Title>
-                <Card.Text>See your personal training plan</Card.Text>
-              </Card.Body>
-            </Card>
-
             {/* ----------- MY EXERCISES ----------- */}
             <Card
               className="col shadow mb-3 background-card selected"

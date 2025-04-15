@@ -42,12 +42,12 @@ function UserDashboard() {
           
           <Card
             className="shadow mb-3 background-card selected"
-            onClick={() => navigate(`/blogPosts/create`)}  // TIDOOOOO
+            onClick={() => navigate(`/all-trainingplans`)}
             style={{ cursor: "pointer" }}
           >
             <Card.Body>
-              <Card.Title>My Training Plan</Card.Title>
-              <Card.Text>See your personal training plan</Card.Text>
+              <Card.Title>Training Plans</Card.Title>
+              <Card.Text>See all available training plans</Card.Text>
             </Card.Body>
           </Card>
 

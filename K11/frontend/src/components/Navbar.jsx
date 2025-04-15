@@ -61,9 +61,15 @@ const NavBar = () => {
           />
         </Navbar.Brand> */}
         <Nav>
-          <Nav.Link as={Link} to="/" onClick={handleNavigation}>
-            <h3 className="m-0 fs-5 d-none d-md-block">BE YOUR BEST SELF</h3>
-          </Nav.Link>
+          {mongoUser && mongoUser.role === "admin" ? (
+            <Nav.Link as={Link} to="/admin-home" onClick={handleNavigation}>
+              <h3 className="m-0 fs-5 d-none d-md-block">BE YOUR BEST SELF</h3>
+            </Nav.Link>
+          ) : (
+            <Nav.Link as={Link} to="/" onClick={handleNavigation}>
+              <h3 className="m-0 fs-5 d-none d-md-block">BE YOUR BEST SELF</h3>
+            </Nav.Link>
+          )}
         </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

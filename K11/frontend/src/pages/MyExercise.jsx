@@ -1,4 +1,4 @@
-import { Card, Container, Row, Button } from "react-bootstrap";
+import { Card, Container, Row, Button, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
@@ -69,35 +69,31 @@ function MyExercise() {
         <Row className="mb-3">
           <h4>Here you can see your exercises with their details</h4>
         </Row>
-
-        {loading && <p>Loading...</p>}
+        {loading && (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )}
         {error && <p className="text-danger">{error}</p>}
         <Row className="d-flex align-items-center">
           {!loading &&
-            (exercises.length > 0 ? (
-              exercises.map((exercise) => (
-                <Card
-                  className="shadow mb-3 background-card selected"
-                  key={exercise._id}
-                  onClick={() => navigate(`/exercises/${exercise._id}`)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <Card.Body>
-                    <Card.Title>{exercise.exercise.name}</Card.Title>
-                    <Card.Text>
-                      Last Update:{" "}
-                      {new Date(exercise.lastDate).toLocaleDateString()}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              ))
-            ) : (
-              <div className="d-flex justify-content-center my-4">
-                <p className="fs-3 text-danger">
-                  You don't have any exercise tracked yet.
-                </p>
-              </div>
+            exercises.map((exercise) => (
+              <Card
+                className="shadow mb-3 background-card selected"
+                key={exercise._id}
+                onClick={() => navigate(`/exercises/${exercise._id}`)}
+                style={{ cursor: "pointer" }}
+              >
+                <Card.Body>
+                  <Card.Title>{exercise.exercise.name}</Card.Title>
+                  <Card.Text>
+                    Last Update:{" "}
+                    {new Date(exercise.lastDate).toLocaleDateString()}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
             ))}
+          {/* {exercises.length === 0 && !loading && <p>You have no tracked exercises yet</p>} */}
         </Row>
       </Container>
     </div>

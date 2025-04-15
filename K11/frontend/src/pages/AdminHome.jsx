@@ -20,7 +20,12 @@ const AdminHome = () => {
     const fetchExercises = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/exercises`
+          `${process.env.REACT_APP_BACKEND_URL}/exercises`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
         );
         console.log("Exercises response:", response.data);
         setExercises(response.data.exercises);
@@ -45,7 +50,6 @@ const AdminHome = () => {
             },
           }
         );
-        console.log("Training plans response:", response.data);
         setTrainingPlans(response.data.trainingPlans);
         setError(null);
       } catch (error) {
@@ -64,36 +68,48 @@ const AdminHome = () => {
   return (
     <>
       <Container className="d-flex flex-column flex-md-row gap-5">
+        {/* EXERCISES */}
         <Col className="d-flex justify-content-between align-items-center">
-          {exercisesLoading && <p>Loading...</p>}
-          {error && <p className="text-danger">{error}</p>}
           <Row style={{ height: "100%" }} className="d-flex align-items-center">
             <h3 className="mb-3">Exercises</h3>
-            {!exercisesLoading ? (
+            {exercisesLoading && (
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            )}
+            {error && <p className="text-danger">{error}</p>}
+            {!exercisesLoading &&
               exercises.map((exercise) => (
                 <Col key={exercise._id} xs={6} lg={4} className="mb-5">
                   <ExerciseCard exercise={exercise} />
                 </Col>
-              ))
-            ) : (
-              <Col>
-                <p>No exercises found.</p>
-              </Col>
-            )}
+              ))}
           </Row>
         </Col>
+        {exercises.length === 0 && !exercisesLoading && (
+          <Col>
+            <p className="text-muted">No exercises available.</p>
+          </Col>
+        )}
+
+        {/* TRAINING PLANS  */}
         <Col className="d-flex justify-content-between align-self-start">
-          {plansLoading && <p>Loading...</p>}
-          {error && <p className="text-danger">{error}</p>}
           <Row style={{ height: "100%" }} className="d-flex align-items-center">
             <h3 className="mb-3">Training Plans</h3>
-            {console.log(trainingPlans)}
-            {!plansLoading ? (
+            {plansLoading && (
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            )}
+            {error && <p className="text-danger">{error}</p>}
+            {!plansLoading &&
               trainingPlans.map((trainingPlan) => (
                 <Col key={trainingPlan._id} xs={12}>
                   <Card
                     className="col shadow mb-3 background-card selected "
-                    onClick={() => navigate(`/trainingplans/${trainingPlan._id}`)}
+                    onClick={() =>
+                      navigate(`/trainingplans/${trainingPlan._id}`)
+                    }
                     style={{ cursor: "pointer" }}
                   >
                     <Card.Body>
@@ -103,10 +119,10 @@ const AdminHome = () => {
                     </Card.Body>
                   </Card>
                 </Col>
-              ))
-            ) : (
+              ))}
+            {trainingPlans.length === 0 && !plansLoading && (
               <Col>
-                <p>No training plans found.</p>
+                <p className="text-muted">No training plans available.</p>
               </Col>
             )}
           </Row>

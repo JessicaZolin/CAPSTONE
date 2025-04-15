@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 function AdminSeeUserExercises() {
   const { userId } = useParams();
-  console.log(userId);
   const { token } = UserAuth();
   const navigate = useNavigate();
   const [exercises, setExercises] = useState([]);

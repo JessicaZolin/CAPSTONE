@@ -19,12 +19,14 @@ import AdminDashboard from "./pages/AdminDashboard";
 import UsersList from "./pages/UsersList";
 import AdminManageUserProfile from "./pages/AdminManageUserProfile";
 import MyExercise from "./pages/MyExercise";
-import AllExercise from "./pages/AllExercise";
 import AdminSeeUserExercises from "./pages/AdminSeeUserExercises";
 import CreateNewTrainingPlan from "./pages/CreateNewTrainingPlan";
 import AdminHome from "./pages/AdminHome";
 import TrainingPlansDetails from "./pages/TrainingPlansDetails";
 import EditTrainingPlan from "./pages/EditTrainingPlan";
+import AllTrainingPlans from "./pages/AllTrainingPlans";
+import AllExerciseWithLogs from "./pages/AllExerciseWithLogs";
+import AllExercise from "./pages/AllExercise";
 
 function App() {
   return (
@@ -57,6 +59,11 @@ function App() {
                   path="/trainingplans/:trainingPlanId"
                   element={<TrainingPlansDetails />}
                 />
+                <Route
+                  path="/all-trainingplans"
+                  element={<AllTrainingPlans />}
+                />
+                <Route path="/all-exercises" element={<AllExercise />} />
               </Route>
 
               {/* --------------------------------- Admin routes -------------------------------- */}
@@ -72,26 +79,28 @@ function App() {
                   element={<EditExercise />}
                 />
                 <Route path="/userslist" element={<UsersList />} />
-              </Route>
-              <Route
-                path="/admin-manage-user-profile/:userId"
-                element={<AdminManageUserProfile />}
-              />
-              <Route path="/all-exercises" element={<AllExercise />} />
-              <Route
-                path="/user-exercises/:userId"
-                element={<AdminSeeUserExercises />}
-              />
-              <Route
-                path="/trainingplans/create"
-                element={<CreateNewTrainingPlan />}
-              />
-              <Route
-                path="/trainingplans/edit/:trainingPlanId"
-                element={<EditTrainingPlan />}
-              />
-              
 
+                <Route
+                  path="/admin-manage-user-profile/:userId"
+                  element={<AdminManageUserProfile />}
+                />
+                <Route
+                  path="/all-exercises-with-userslog"
+                  element={<AllExerciseWithLogs />}
+                />
+                <Route
+                  path="/user-exercises/:userId"
+                  element={<AdminSeeUserExercises />}
+                />
+                <Route
+                  path="/trainingplans/create"
+                  element={<CreateNewTrainingPlan />}
+                />
+                <Route
+                  path="/trainingplans/edit/:trainingPlanId"
+                  element={<EditTrainingPlan />}
+                />
+              </Route>
               {/* --------------------------------- Public routes -------------------------------- */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

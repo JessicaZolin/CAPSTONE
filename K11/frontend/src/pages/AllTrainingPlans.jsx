@@ -2,18 +2,25 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Spinner, Button } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
 
 const AllTrainingPlans = () => {
   const [trainingPlans, setTrainingPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { token } = UserAuth();
 
   useEffect(() => {
     const fetchTrainingPlans = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/trainingplans`
+          `${process.env.REACT_APP_BACKEND_URL}/trainingplans`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
         );
         setTrainingPlans(response.data.trainingPlans);
         setError(null);

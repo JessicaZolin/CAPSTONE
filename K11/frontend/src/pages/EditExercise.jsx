@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Alert, Spinner } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
@@ -24,7 +24,12 @@ const EditExercise = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}`
+          `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
         );
         const exercise = response.data;
         console.log(exercise.name);
@@ -86,6 +91,7 @@ const EditExercise = () => {
           {
             headers: {
               "Content-Type": "multipart/form-data",
+              Authorization: token,
             },
           }
         );
@@ -104,7 +110,9 @@ const EditExercise = () => {
   if (loading)
     return (
       <Container className="container-main mt-4">
-        <p>Loading...</p>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
       </Container>
     );
 
@@ -140,19 +148,6 @@ const EditExercise = () => {
           <h2 className="title">Edit Exercise</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            {/* ---------------------------- Form Field Category ---------------------------- */}
-            {/* <Form.Group className="mb-3" controlId="category">
-              <Form.Label>Category</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter category"
-                value={formData.category}
-                onChange={(e) =>
-                  setFormData({ ...formData, category: e.target.value })
-                }
-                required
-              />
-            </Form.Group> */}
 
             {/*                        ---------------------------- Form Field Title ---------------------------- */}
             <Form.Group className="mb-3" controlId="title">
@@ -195,23 +190,6 @@ const EditExercise = () => {
                 Upload an image for the cover only if you want to change it.
               </Form.Text>
             </Form.Group>
-
-            {/*                        ---------------------------- Form Field Read Time ---------------------------- */}
-            {/* <Form.Group className="mb-3" controlId="readTime">
-              <Form.Label>Read Time (minutes)</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter read time"
-                value={formData.readTime.value}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    readTime: { ...formData.readTime, value: e.target.value },
-                  })
-                }
-                required
-              />
-            </Form.Group> */}
 
             {/*                        ---------------------------- Form Field Description ---------------------------- */}
             <Form.Group className="mb-3" controlId="content">

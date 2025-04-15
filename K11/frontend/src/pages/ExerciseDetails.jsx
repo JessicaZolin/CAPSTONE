@@ -1,10 +1,17 @@
-import { Container, Row, Col, Button, Alert, Badge } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Alert,
+  Badge,
+  Spinner,
+} from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import Weight from "../components/Weight";
 import axios from "axios";
-
 
 const ExerciseDetails = () => {
   const [exercise, setExercises] = useState({});
@@ -12,7 +19,7 @@ const ExerciseDetails = () => {
   const [error, setError] = useState(null);
   const { exerciseId } = useParams();
   const navigate = useNavigate();
-  const { mongoUser } = UserAuth();
+  const { mongoUser, token } = UserAuth();
 
   // --------------------------- Function to fetch exercise details ---------------------------
   useEffect(() => {
@@ -20,7 +27,12 @@ const ExerciseDetails = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}`
+          `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
         );
         setExercises(response.data);
         setError(null);
@@ -40,9 +52,16 @@ const ExerciseDetails = () => {
     if (window.confirm("Are you sure you want to delete this exercise?")) {
       try {
         await axios.delete(
-          `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}`
+          `${process.env.REACT_APP_BACKEND_URL}/exercises/${exerciseId}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
         );
-        navigate("/"); // Aggiorna la lista dei post dopo la cancellazione
+        {
+          mongoUser.role === "admin" ? navigate("/Admin-home") : navigate("/");
+        }
       } catch (error) {
         console.error("Error deleting post:", error);
         setError("Error while deleting post");
@@ -59,7 +78,9 @@ const ExerciseDetails = () => {
     <div className="container">
       <Button
         className="container-main align-items-center color-button-546a76-bg-white"
-        onClick={() => { isAdmin ? navigate(`/Admin-home`) : navigate("/") }}
+        onClick={() => {
+          isAdmin ? navigate(`/Admin-home`) : navigate("/");
+        }}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -97,12 +118,15 @@ const ExerciseDetails = () => {
         Back to My Exercises
       </Button>
 
-
       <Container
         className="background-card p-4 mt-5 rounded shadow"
         style={{ marginBottom: "100px" }}
       >
-        {loading && <p>Loading...</p>}
+        {loading && (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )}
         {error && <Alert variant="danger">{error}</Alert>}
         {exercise && exercise._id && (
           <>
@@ -112,11 +136,15 @@ const ExerciseDetails = () => {
                   className="d-flex align-items-center pb-3 mb-2 gap-4"
                   style={{ borderBottom: "1px solid #ccc" }}
                 >
-                 {/*  <Badge className="background-badge-category me-2 p-2">
+                  {/*  <Badge className="background-badge-category me-2 p-2">
                     {post.category}
                   </Badge> */}
                   <small className="text-muted">
-                    {new Date(exercise.createdAt).toLocaleString().split(",")[0]}
+                    {
+                      new Date(exercise.createdAt)
+                        .toLocaleString()
+                        .split(",")[0]
+                    }
                   </small>
                 </div>
                 <div
@@ -129,7 +157,9 @@ const ExerciseDetails = () => {
                     <div className="mt-2">
                       <Button
                         className="me-2 color-button-546a76"
-                        onClick={() => navigate(`/exercises/edit/${exercise._id}`)}
+                        onClick={() =>
+                          navigate(`/exercises/edit/${exercise._id}`)
+                        }
                       >
                         Edit
                       </Button>
@@ -143,7 +173,6 @@ const ExerciseDetails = () => {
                   )}
                 </div>
                 <p style={{ minHeight: "50%" }}>{exercise.description}</p>
-
               </Col>
               <Col xs={12} md={4} className="d-flex justify-content-center">
                 <img

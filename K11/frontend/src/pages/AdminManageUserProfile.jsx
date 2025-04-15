@@ -28,7 +28,12 @@ const AdminManageUserProfile = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
         );
         setFormData({
           firstName: response.data.firstName || "",

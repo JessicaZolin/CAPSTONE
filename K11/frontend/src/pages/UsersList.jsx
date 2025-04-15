@@ -13,7 +13,7 @@ import axios from "axios";
 import UserCard from "../components/UserCard";
 
 function UsersList() {
-  const { user } = UserAuth();
+  const { token } = UserAuth();
   const navigate = useNavigate();
 
   const [users, setUsers] = useState([]);
@@ -26,7 +26,12 @@ function UsersList() {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/users?page=${currentPage}&limitPerPage=6`
+        `${process.env.REACT_APP_BACKEND_URL}/users?page=${currentPage}&limitPerPage=6`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
       );
       console.log(response.data.users);
       setUsers(response.data.users);
@@ -85,7 +90,7 @@ function UsersList() {
             ))}
         </Row>
 
-        {!loading &&totalPages > 1 && (
+        {!loading && totalPages > 1 && (
           <Row>
             <Col className="d-flex justify-content-center my-4">
               <Pagination className="m-0">

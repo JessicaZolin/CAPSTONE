@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const UserProfile = () => {
-  const { user, mongoUser, token, setMongoUser, setUser } = UserAuth();
+  const { mongoUser, token, setMongoUser, setUser } = UserAuth();
   console.log(mongoUser);
   const [formData, setFormData] = useState({
     firstName: mongoUser?.firstName || "",
@@ -130,7 +130,9 @@ const UserProfile = () => {
       <Button
         className="container-main align-items-center color-button-546a76-bg-white"
         onClick={() => {
-          mongoUser?.role === "admin" ? navigate("/admin-dashboard") : navigate("/user-dashboard");
+          mongoUser?.role === "admin"
+            ? navigate("/admin-dashboard")
+            : navigate("/user-dashboard");
         }}
       >
         <svg
@@ -180,6 +182,7 @@ const UserProfile = () => {
                   value={formData.firstName}
                   onChange={handleChange}
                   required
+                  disabled
                 />
               </Form.Group>
 
@@ -191,6 +194,7 @@ const UserProfile = () => {
                   value={formData.lastName}
                   onChange={handleChange}
                   required
+                  disabled
                 />
               </Form.Group>
 
@@ -214,6 +218,7 @@ const UserProfile = () => {
                   accept="image/*"
                   placeholder="Upload your profile image"
                   onChange={handleImageChange}
+                  required
                 />
                 {previewUrl && (
                   <img
