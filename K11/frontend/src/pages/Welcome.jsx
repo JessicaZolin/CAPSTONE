@@ -8,12 +8,11 @@ import { UserAuth } from "../context/AuthContext";
 const Welcome = () => {
   /* const [user, setUser] = useState(null); */
   const [isLoading, setIsLoading] = useState(true);
-  const {user} = UserAuth();
-
+  const { user } = UserAuth();
 
   // -------------------------------------------------------- Handle logout
-  
-useEffect(() => {
+
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         console.log("Current user:", currentUser);
@@ -24,7 +23,6 @@ useEffect(() => {
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
-  
 
   return (
     <>
@@ -34,19 +32,27 @@ useEffect(() => {
         </Spinner>
       ) : (
         <Container className="d-flex flex-column flex-md-row justify-content-center text-center pages gap-5 col-10">
-          <Row className="bg-dark text-white rounded">
+          <Row className="d-flex flex-column justify-content-center align-items-center gap-2">
+            <img
+              src="https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg"
+              alt="Logo"
+              className="logo-welcome-page"
+              style={{ width: "130px", height: "100px" }}
+            />
+          </Row>
+          <Row className="d-flex flex-column justify-content-center align-items-center gap-2 bg-dark text-white rounded">
             <h1>Benvenuto in K11</h1>
             <h2>BE YOUR BEST SELF</h2>
           </Row>
           <Row className="gap-2">
-              <>
-                <Button type="submit" size="lg" as={Link} to="/login">
-                  Login
-                </Button>
-                <Button type="submit" size="lg" as={Link} to="/register">
-                  Registrati
-                </Button>
-              </>
+            <>
+              <Button type="submit" size="lg" as={Link} to="/login">
+                Login
+              </Button>
+              <Button type="submit" size="lg" as={Link} to="/register">
+                Registrati
+              </Button>
+            </>
           </Row>
         </Container>
       )}

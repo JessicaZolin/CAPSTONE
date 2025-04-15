@@ -45,13 +45,14 @@ const Home = () => {
         {error && <p className="text-danger">{error}</p>}
         <Row style={{ height: "100%" }} className="d-flex align-items-center">
           <h3 className="mb-3">Exercises</h3>
-          {!loading ? (
+          {!loading && (
             exercises.map((exercise) => (
               <Col key={exercise._id} xs={6} md={2} className="mb-5">
                 <ExerciseCard exercise={exercise} />
               </Col>
             ))
-          ) : (
+          )}
+          {exercises.length === 0 && !loading && (
             <Col>
               <p>No exercises found.</p>
             </Col>

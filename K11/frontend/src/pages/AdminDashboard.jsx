@@ -66,7 +66,7 @@ function AdminDashboard() {
           <h2>Manage Exercises</h2>
 
           <Row>
-            <div className="d-flex justify-content-between gap-5">
+            <div className="d-flex flex-column flex-md-row justify-content-between gap-md-5">
               {/* --------- CREATE EXERCISES --------- */}
               <Card
                 className="col shadow mb-3 background-card selected"
@@ -94,7 +94,7 @@ function AdminDashboard() {
           </Row>
 
           <Row>
-            <div className="d-flex justify-content-between gap-5">
+            <div className="d-flex flex-column flex-md-row justify-content-between gap-md-5">
               {/* --------- ALL EXERCISES --------- */}
               <Card
                 className="col shadow mb-3 background-card selected"
@@ -156,7 +156,7 @@ function AdminDashboard() {
         {/* -------------------------------- Manage my profile -------------------------------- */}
         <Row>
           <h2>Manage My Profile</h2>
-          <div className="d-flex justify-content-between gap-5">
+          <div className="d-flex flex-column flex-md-row justify-content-between gap-md-5">
             {/* ----------- MY EXERCISES ----------- */}
             <Card
               className="col shadow mb-3 background-card selected"

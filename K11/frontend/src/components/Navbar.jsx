@@ -44,15 +44,15 @@ const NavBar = () => {
       variant="dark"
       style={{
         minHeight: "100px",
-        backgroundImage:
+        /*  backgroundImage:
           "url(https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg)",
         backgroundPosition: "center",
         backgroundSize: "contain",
-        backgroundRepeat: "no-repeat",
+        backgroundRepeat: "no-repeat", */
         backgroundColor: "black",
       }}
     >
-      <Container>
+      <Container className="d-flex justify-content-between align-items-center">
         {/* <Navbar.Brand as={Link} to="/" onClick={handleNavigation}>
           <img
             src="https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg"
@@ -62,8 +62,8 @@ const NavBar = () => {
         </Navbar.Brand> */}
         <Nav>
           {mongoUser && mongoUser.role === "admin" ? (
-            <Nav.Link as={Link} to="/admin-home" onClick={handleNavigation}>
-              <h3 className="m-0 fs-5 d-none d-md-block">BE YOUR BEST SELF</h3>
+            <Nav.Link as={Link} to="/admin-home" onClick={handleNavigation} className="d-flex align-items-center gap-3 p-0">
+              <h3 className="m-0 fs-5 d-none d-md-flex">BE YOUR BEST SELF</h3><img src="https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg" alt="K11-logo" style={{ width: "100px", height: "100px" }} />
             </Nav.Link>
           ) : (
             <Nav.Link as={Link} to="/" onClick={handleNavigation}>
@@ -71,7 +71,7 @@ const NavBar = () => {
             </Nav.Link>
           )}
         </Nav>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
         <Navbar.Collapse id="basic-navbar-nav">
           {user && (
             <Nav className="mt-2 mt-lg-0 ms-auto">
@@ -94,10 +94,10 @@ const NavBar = () => {
                         ? `Ciao, ${mongoUser.firstName} ${mongoUser.lastName}`
                         : `Ciao, ${user?.displayName}`
                     }
-                    id="basic-nav-dropdown"
+                    id={"dropdown-button-drop-up"}
                     align="end"
-                    style={{ fontSize: "13pt" }}
-                    variant="dark"
+                    style={{ fontSize: "13pt"}}
+                    data-bs-theme="dark"
                   >
                     {/* DASHBOARD */}
                     {mongoUser?.role === "admin" ? (
