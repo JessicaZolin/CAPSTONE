@@ -62,91 +62,113 @@ const NavBar = () => {
         </Navbar.Brand> */}
         <Nav>
           {mongoUser && mongoUser.role === "admin" ? (
-            <Nav.Link as={Link} to="/admin-home" onClick={handleNavigation} className="d-flex align-items-center gap-3 p-0">
-              <h3 className="m-0 fs-5 d-none d-md-flex">BE YOUR BEST SELF</h3><img src="https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg" alt="K11-logo" style={{ width: "100px", height: "100px" }} />
+            <Nav.Link
+              as={Link}
+              to="/admin-home"
+              onClick={handleNavigation}
+              className="d-flex align-items-center gap-3 p-0"
+            >
+              <h3 className="m-0 fs-5 d-none d-md-flex">BE YOUR BEST SELF</h3>
+              <img
+                src="https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg"
+                alt="K11-logo"
+                style={{ width: "100px", height: "100px" }}
+              />
             </Nav.Link>
           ) : (
-            <Nav.Link as={Link} to="/" onClick={handleNavigation}>
-              <h3 className="m-0 fs-5 d-none d-md-block">BE YOUR BEST SELF</h3>
+            <Nav.Link
+              as={Link}
+              to="/"
+              onClick={handleNavigation}
+              className="d-flex align-items-center gap-3 p-0"
+            >
+              <h3 className="m-0 fs-5 d-none d-md-flex">BE YOUR BEST SELF</h3>
+              <img
+                src="https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg"
+                alt="K11-logo"
+                style={{ width: "100px", height: "100px" }}
+              />
             </Nav.Link>
           )}
         </Nav>
-        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-        <Navbar.Collapse id="basic-navbar-nav">
-          {user && (
-            <Nav className="mt-2 mt-lg-0 ms-auto">
-              <>
-                <div className="d-flex align-items-center">
-                  <Image
-                    src={
-                      mongoUser !== null
-                        ? mongoUser?.profileImage
-                        : user?.photoURL
-                    }
-                    roundedCircle
-                    width={50}
-                    height={50}
-                    className="me-2 object-fit-cover"
-                  />
-                  <NavDropdown
-                    title={
-                      mongoUser
-                        ? `Ciao, ${mongoUser.firstName} ${mongoUser.lastName}`
-                        : `Ciao, ${user?.displayName}`
-                    }
-                    id={"dropdown-button-drop-up"}
-                    align="end"
-                    style={{ fontSize: "13pt"}}
-                    data-bs-theme="dark"
-                  >
-                    {/* DASHBOARD */}
-                    {mongoUser?.role === "admin" ? (
+        {user && (
+          <>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="mt-2 mt-lg-0 ms-auto">
+                <>
+                  <div className="d-flex align-items-center">
+                    <Image
+                      src={
+                        mongoUser !== null
+                          ? mongoUser?.profileImage
+                          : user?.photoURL
+                      }
+                      roundedCircle
+                      width={50}
+                      height={50}
+                      className="me-2 object-fit-cover"
+                    />
+                    <NavDropdown
+                      title={
+                        mongoUser
+                          ? `Ciao, ${mongoUser.firstName} ${mongoUser.lastName}`
+                          : `Ciao, ${user?.displayName}`
+                      }
+                      id={"dropdown-button-drop-up"}
+                      align="end"
+                      style={{ fontSize: "13pt" }}
+                      data-bs-theme="dark"
+                    >
+                      {/* DASHBOARD */}
+                      {mongoUser?.role === "admin" ? (
+                        <NavDropdown.Item
+                          as={Link}
+                          to="/admin-dashboard"
+                          onClick={handleNavigation}
+                          style={{ fontSize: "13pt" }}
+                        >
+                          Dashboard Admin
+                        </NavDropdown.Item>
+                      ) : (
+                        <NavDropdown.Item
+                          as={Link}
+                          to="/user-dashboard"
+                          onClick={handleNavigation}
+                          style={{ fontSize: "13pt" }}
+                        >
+                          Dashboard User
+                        </NavDropdown.Item>
+                      )}
+
+                      <NavDropdown.Divider />
+
+                      {/* MANAGE PROFILE */}
                       <NavDropdown.Item
                         as={Link}
-                        to="/admin-dashboard"
+                        to="/user-profile"
                         onClick={handleNavigation}
                         style={{ fontSize: "13pt" }}
                       >
-                        Dashboard Admin
+                        Manage Profile
                       </NavDropdown.Item>
-                    ) : (
+
+                      <NavDropdown.Divider />
+
+                      {/* LOGOUT */}
                       <NavDropdown.Item
-                        as={Link}
-                        to="/user-dashboard"
-                        onClick={handleNavigation}
+                        onClick={handleLogout}
                         style={{ fontSize: "13pt" }}
                       >
-                        Dashboard User
+                        Logout
                       </NavDropdown.Item>
-                    )}
-
-                    <NavDropdown.Divider />
-
-                    {/* MANAGE PROFILE */}
-                    <NavDropdown.Item
-                      as={Link}
-                      to="/user-profile"
-                      onClick={handleNavigation}
-                      style={{ fontSize: "13pt" }}
-                    >
-                      Manage Profile
-                    </NavDropdown.Item>
-
-                    <NavDropdown.Divider />
-
-                    {/* LOGOUT */}
-                    <NavDropdown.Item
-                      onClick={handleLogout}
-                      style={{ fontSize: "13pt" }}
-                    >
-                      Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </div>
-              </>
-            </Nav>
-          )}
-        </Navbar.Collapse>
+                    </NavDropdown>
+                  </div>
+                </>
+              </Nav>
+            </Navbar.Collapse>
+          </>
+        )}
       </Container>
     </Navbar>
   );
