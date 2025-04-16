@@ -5,7 +5,7 @@ import User from "../models/User.js";
 export async function register(request, response, next) {
 
   // get the user from the request
-  const { email, displayName, photoURL} = request.body.user;
+  const { email, displayName, photoURL, MedicalCertificate, AboExpiration } = request.body.user;
 
   // get the token from the request.user given after the token verification
   const { uid } = request.user;
@@ -27,6 +27,8 @@ export async function register(request, response, next) {
       email,
       profileImage: photoURL,
       firebaseUID: uid,
+      MedicalCertificate,
+      AboExpiration
     });
     await newUser.save();
     response

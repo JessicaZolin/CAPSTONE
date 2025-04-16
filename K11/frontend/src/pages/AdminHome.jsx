@@ -5,6 +5,8 @@ import ExerciseCard from "../components/ExerciseCard";
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+// -----------------------------------------------------------------------------------------------
+
 const AdminHome = () => {
   const [exercises, setExercises] = useState([]);
   const [trainingPlans, setTrainingPlans] = useState([]);
@@ -13,7 +15,6 @@ const AdminHome = () => {
   const [error, setError] = useState(null);
   const { token } = UserAuth();
   const navigate = useNavigate();
-  console.log("token", token);
 
   useEffect(() => {
     // Fetch exercises from the backend
@@ -27,7 +28,6 @@ const AdminHome = () => {
             },
           }
         );
-        console.log("Exercises response:", response.data);
         setExercises(response.data.exercises);
         setError(null);
       } catch (error) {
@@ -64,6 +64,8 @@ const AdminHome = () => {
     fetchExercises();
     fetchTrainingPlans();
   }, []);
+
+ // -----------------------------------------------------------------------------------------------
 
   return (
     <>

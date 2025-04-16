@@ -6,7 +6,6 @@ import {
   Row,
   Col,
   Form,
-  Button,
   Alert,
   Spinner,
 } from "react-bootstrap";
@@ -14,6 +13,9 @@ import { getRedirectResult, sendPasswordResetEmail } from "firebase/auth";
 import { GoogleButton } from "react-google-button";
 import { UserAuth } from "../context/AuthContext.jsx";
 import axios from "axios";
+import { ButtonComponent } from "../components/Buttons.jsx";
+
+// -----------------------------------------------------------------------------------------------
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +23,8 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { googleSignIn, emailAndPasswordSingIn, user, mongoUser, token } = UserAuth();
+  const { googleSignIn, emailAndPasswordSingIn, user, mongoUser, token } =
+    UserAuth();
 
   // -------------------------------------------------------- Handle form login with email and password
   const onSubmit = async (e) => {
@@ -52,7 +55,7 @@ const Login = () => {
       // Call the function to login the user with Google in Firebase
       const response = await googleSignIn();
 
-      console.log ("Response from googleSignIn:", response);
+      console.log("Response from googleSignIn:", response);
 
       // Get the token from the response
       // const token = await response.getIdToken();
@@ -88,32 +91,24 @@ const Login = () => {
 
   // -------------------------------------------------------- Handle redirect result from Google sign-in
 
- /*  useEffect(() => {
-    if (user !== null && user !== undefined) {
-      navigate("/");
-    } else {
-      navigate("/login");
-    }
-  }, [user]); */
-
   useEffect(() => {
     const handleNavigation = () => {
       // Check if both Firebase and MongoDB user are loaded
       if (user && mongoUser) {
         // Check user role and navigate accordingly
-        if (mongoUser.role === 'admin') {
-          navigate('/admin-home');
+        if (mongoUser.role === "admin") {
+          navigate("/admin-home");
         } else {
-          navigate('/');
+          navigate("/");
         }
       } else if (!user) {
         // Only navigate to login if there's no user
         // This prevents infinite redirect loops
-        navigate('/login');
+        navigate("/login");
       }
       // Don't navigate if we're still waiting for mongoUser
     };
-  
+
     handleNavigation();
   }, [user, mongoUser, navigate]); // Add mongoUser to dependencies
 
@@ -130,7 +125,8 @@ const Login = () => {
     }
   };
 
-  // ---------------------------- Render the login form ----------------------------
+  // -----------------------------------------------------------------------------------------------
+  
   return (
     <>
       {isLoading ? (
@@ -138,103 +134,134 @@ const Login = () => {
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       ) : (
-        <Container className="background-card container-main p-4 my-5 rounded shadow pages">
-          <Button
-            type="submit"
+        <div className="container">
+          <ButtonComponent
+            text={"Welcomepage"}
+            type={"submit"}
             as={Link}
-            to="/welcome"
-            className="align-self-start mb-3 mb-md-0"
-          >
-            {" "}
-            Back to Welcomepage{" "}
-          </Button>
-          {/* {userLoggingIn && <Navigate to="/" replace={true} />} */}
-          <Row className="justify-content-center">
-            <Col xs={12} md={6}>
-              <h2 className="title">Login</h2>
-              {error && <Alert variant="danger">{error}</Alert>}
-              <Form onSubmit={onSubmit}>
-                {/* ---------------------------- Email input ---------------------------- */}
-                <Form.Group className="mb-3" controlId="email">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
+            to={"/welcome"}
+          />
 
-                {/* ---------------------------- Password input ---------------------------- */}
-                <Form.Group className="mb-3" controlId="password">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Form.Group>
+          <Container className="p-4 my-5 rounded shadow">
+            <Row className="justify-content-center">
+              <Col xs={12} md={6}>
+                <h2 className="title">Login</h2>
+                {error && <Alert variant="danger">{error}</Alert>}
+                <Form onSubmit={onSubmit}>
+                  {/* ---------------------------- Email input ---------------------------- */}
+                  <Form.Group className="mb-3" controlId="email">
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter your email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </Form.Group>
 
-                {/* ---------------------------- Login button ---------------------------- */}
-                <div className="d-grid gap-2 mb-3">
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="py-2 color-button-546a76"
+                  {/* ---------------------------- Password input ---------------------------- */}
+                  <Form.Group className="mb-3" controlId="password">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Enter your password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Form.Group>
+
+                  {/* ---------------------------- Login button ---------------------------- */}
+                  <div className="d-grid gap-2 mb-3">
+                    <ButtonComponent
+                      text={"Login"}
+                      type={"submit"}
+                      size={"lg"}
+                    />
+                  </div>
+                  <div className="text-muted text-center mb-3">Or</div>
+
+                  {/* ---------------------------- Google login button ---------------------------- */}
+                  <div className="d-grid gap-2">
+                    <ButtonComponent
+                      text={"Sign in with Google"}
+                      onClick={handleGoogleSignIn}
+                      className={
+                        "d-flex align-items-center justify-content-center gap-2"
+                      }
+                      svg={
+                        <svg width="30" height="30" role="img">
+                          <title>Google's Logo</title>
+                          <g
+                            id="Google-Button"
+                            stroke="none"
+                            stroke-width="1"
+                            fill="none"
+                            fill-rule="evenodd"
+                          >
+                            <rect
+                              x="0"
+                              y="0"
+                              width="30"
+                              height="30"
+                              rx="2"
+                            ></rect>
+                            <g
+                              id="logo_googleg_48dp"
+                              transform="translate(1.65, 1.65) scale(1.4300000000000002)"
+                            >
+                              <path
+                                d="M17.64,9.20454545 C17.64,8.56636364 17.5827273,7.95272727 17.4763636,7.36363636 L9,7.36363636 L9,10.845 L13.8436364,10.845 C13.635,11.97 13.0009091,12.9231818 12.0477273,13.5613636 L12.0477273,15.8195455 L14.9563636,15.8195455 C16.6581818,14.2527273 17.64,11.9454545 17.64,9.20454545 L17.64,9.20454545 Z"
+                                id="Shape"
+                                fill="#4285F4"
+                              ></path>
+                              <path
+                                d="M9,18 C11.43,18 13.4672727,17.1940909 14.9563636,15.8195455 L12.0477273,13.5613636 C11.2418182,14.1013636 10.2109091,14.4204545 9,14.4204545 C6.65590909,14.4204545 4.67181818,12.8372727 3.96409091,10.71 L0.957272727,10.71 L0.957272727,13.0418182 C2.43818182,15.9831818 5.48181818,18 9,18 L9,18 Z"
+                                id="Shape"
+                                fill="#34A853"
+                              ></path>
+                              <path
+                                d="M3.96409091,10.71 C3.78409091,10.17 3.68181818,9.59318182 3.68181818,9 C3.68181818,8.40681818 3.78409091,7.83 3.96409091,7.29 L3.96409091,4.95818182 L0.957272727,4.95818182 C0.347727273,6.17318182 0,7.54772727 0,9 C0,10.4522727 0.347727273,11.8268182 0.957272727,13.0418182 L3.96409091,10.71 L3.96409091,10.71 Z"
+                                id="Shape"
+                                fill="#FBBC05"
+                              ></path>
+                              <path
+                                d="M9,3.57954545 C10.3213636,3.57954545 11.5077273,4.03363636 12.4404545,4.92545455 L15.0218182,2.34409091 C13.4631818,0.891818182 11.4259091,0 9,0 C5.48181818,0 2.43818182,2.01681818 0.957272727,4.95818182 L3.96409091,7.29 C4.67181818,5.16272727 6.65590909,3.57954545 9,3.57954545 L9,3.57954545 Z"
+                                id="Shape"
+                                fill="#EA4335"
+                              ></path>
+                              <path
+                                d="M0,0 L18,0 L18,18 L0,18 L0,0 Z"
+                                id="Shape"
+                              ></path>
+                            </g>
+                          </g>
+                        </svg>
+                      }
+                    />
+                  </div>
+                  <p
+                    className="mt-4 bg-transparent"
+                    style={{ fontSize: "0.9rem", border: "none" }}
                   >
-                    Login
-                  </Button>
-                </div>
-                <div className="text-muted text-center mb-3">Or</div>
-
-                {/* ---------------------------- Google login button ---------------------------- */}
-                <div className="d-grid gap-2">
-                  <Button
-                    variant="outline-secondary"
-                    onClick={handleGoogleSignIn}
-                    className="d-flex align-items-center justify-content-center py-2 gap-2 color-button-google"
+                    Don't have an account?{"  "}
+                    <Alert.Link href="/register">Register</Alert.Link>
+                  </p>
+                  <p
+                    className="bg-transparent"
+                    style={{
+                      fontSize: "0.9rem",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                    onClick={handlePasswordReset}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      x="0px"
-                      y="0px"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 50 50"
-                    >
-                      <path d="M 25.996094 48 C 13.3125 48 2.992188 37.683594 2.992188 25 C 2.992188 12.316406 13.3125 2 25.996094 2 C 31.742188 2 37.242188 4.128906 41.488281 7.996094 L 42.261719 8.703125 L 34.675781 16.289063 L 33.972656 15.6875 C 31.746094 13.78125 28.914063 12.730469 25.996094 12.730469 C 19.230469 12.730469 13.722656 18.234375 13.722656 25 C 13.722656 31.765625 19.230469 37.269531 25.996094 37.269531 C 30.875 37.269531 34.730469 34.777344 36.546875 30.53125 L 24.996094 30.53125 L 24.996094 20.175781 L 47.546875 20.207031 L 47.714844 21 C 48.890625 26.582031 47.949219 34.792969 43.183594 40.667969 C 39.238281 45.53125 33.457031 48 25.996094 48 Z"></path>
-                    </svg>
-                    Login with Google
-                  </Button>
-                  {/* <GoogleButton
-                    type="dark"
-                    className="d-flex align-items-center justify-content-center py-2 gap-2 color-button-google"
-                    onClick={onGoogleSignIn}
-                  /> */}
-                </div>
-                <p
-                  className="mt-4 bg-transparent"
-                  style={{ fontSize: "0.9rem", border: "none" }}
-                >
-                  Don't have an account?{"  "}
-                  <Alert.Link href="/register">Register</Alert.Link>
-                </p>
-                <p
-                  className="bg-transparent"
-                  style={{
-                    fontSize: "0.9rem",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                  onClick={handlePasswordReset}
-                >
-                  Forgot your password?{"  "}
-                </p>
-              </Form>
-            </Col>
-          </Row>
-        </Container>
+                    Forgot your password?{"  "}
+                  </p>
+                </Form>
+              </Col>
+            </Row>
+          </Container>
+        </div>
       )}
     </>
   );

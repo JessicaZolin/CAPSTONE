@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Button, Spinner } from "react-bootstrap";
+import { Container, Row, Button, Spinner, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { UserAuth } from "../context/AuthContext";
+import { ButtonComponent } from "../components/Buttons";
 
 const Welcome = () => {
   /* const [user, setUser] = useState(null); */
@@ -31,29 +32,37 @@ const Welcome = () => {
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       ) : (
-        <Container className="d-flex flex-column flex-md-row justify-content-center text-center pages gap-5 col-10">
-          <Row className="d-flex flex-column justify-content-center align-items-center gap-2">
+        <Container className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-5 col-10">
+          <Col xs={12} md={1} className="d-flex flex-column justify-content-center align-items-center gap-2">
             <img
               src="https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg"
               alt="Logo"
               className="logo-welcome-page"
-              style={{ width: "130px", height: "100px" }}
+              style={{ width: "100px", height: "100px" }}
             />
-          </Row>
-          <Row className="d-flex flex-column justify-content-center align-items-center gap-2 bg-dark text-white rounded">
+          </Col>
+          <Col xs={12} md={4} className="d-flex flex-column justify-content-center align-items-center gap-2 bg-black text-white rounded">
             <h1>Benvenuto in K11</h1>
             <h2>BE YOUR BEST SELF</h2>
-          </Row>
-          <Row className="gap-2">
-            <>
-              <Button type="submit" size="lg" as={Link} to="/login">
-                Login
-              </Button>
-              <Button type="submit" size="lg" as={Link} to="/register">
-                Registrati
-              </Button>
-            </>
-          </Row>
+          </Col>
+          <Col xs={12} md={2}>
+            <Row className="d-flex gap-2" > 
+              <ButtonComponent
+                text={"Login"}
+                type="submit"
+                size="lg"
+                as={Link}
+                to="/login"
+              />
+              <ButtonComponent
+                text={"Register"}
+                type="submit"
+                size="lg"
+                as={Link}
+                to="/register"
+              />
+            </Row>
+          </Col>
         </Container>
       )}
     </>

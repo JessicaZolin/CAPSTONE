@@ -1,6 +1,9 @@
-import { Card, Container, Row, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Card, Container, Row } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import { ButtonComponent } from "../components/Buttons";
+
+// -----------------------------------------------------------------------------------------------
 
 function AdminDashboard() {
   const { user, mongoUser } = UserAuth();
@@ -8,29 +11,12 @@ function AdminDashboard() {
 
   console.log(mongoUser, user);
 
+  // -----------------------------------------------------------------------------------------------
+
   return (
     <div className="container">
-      <Button
-        className="container-main align-items-center color-button-546a76-bg-white"
-        onClick={() => navigate("/admin-home")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          className="bi bi-arrow-left mb-1 me-2"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-          />
-        </svg>
-        Back to the Homepage
-      </Button>
-
-      <Container className="my-5">
+      <ButtonComponent text={"Homepage"} type={"submit"} as={Link} to={"/admin-home"}/>
+      <Container className="p-4 my-5 rounded shadow">
         <Row className="mb-3">
           <h4>
             Hello,{" "}

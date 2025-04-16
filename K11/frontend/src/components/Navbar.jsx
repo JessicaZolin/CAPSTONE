@@ -44,22 +44,11 @@ const NavBar = () => {
       variant="dark"
       style={{
         minHeight: "100px",
-        /*  backgroundImage:
-          "url(https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg)",
-        backgroundPosition: "center",
-        backgroundSize: "contain",
-        backgroundRepeat: "no-repeat", */
-        backgroundColor: "black",
+        backgroundColor: "black"
       }}
     >
       <Container className="d-flex justify-content-between align-items-center">
-        {/* <Navbar.Brand as={Link} to="/" onClick={handleNavigation}>
-          <img
-            src="https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg"
-            alt=""
-            style={{ width: "80px", height: "80px" }}
-          />
-        </Navbar.Brand> */}
+
         <Nav>
           {mongoUser && mongoUser.role === "admin" ? (
             <Nav.Link

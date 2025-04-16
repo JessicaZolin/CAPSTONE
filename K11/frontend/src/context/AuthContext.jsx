@@ -172,7 +172,6 @@ export const AuthContextProvider = ({ children }) => {
 
       // Get the token from the response
       const findedToken = await userCredential.user.getIdToken();
-      console.log("token:", findedToken);
 
       // ------------------------------------------------------------------------------------------------------------------------
       //call the backend to register the user with token and the form data from the form

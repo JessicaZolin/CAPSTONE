@@ -11,3 +11,28 @@
   background: rgb(236,6,30);
   background: linear-gradient(162deg, rgba(236,6,30,1) 10%, rgba(239,246,244,1) 59%, rgba(24,0,34,1) 98%);
 } */
+
+.btn {
+  background-color: transparent !important;
+  color: #000;
+  border: #000 solid 1px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 18px;
+
+  &:hover {
+    background-color: #000 !important;
+    border: #e2e8f0 solid 1px !important;
+  }
+
+  &:active {
+    background-color: #000 !important;
+    border: #e2e8f0 solid 1px !important;
+  }
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+
