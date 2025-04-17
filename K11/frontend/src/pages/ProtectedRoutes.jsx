@@ -1,6 +1,6 @@
 import { UserAuth } from "../context/AuthContext";
-import { Spinner } from "react-bootstrap";
 import { Navigate, Outlet } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const ProtectedRoutes = () => {
   const { user, loading, mongoUser, token } = UserAuth();
@@ -8,10 +8,8 @@ const ProtectedRoutes = () => {
 
   if (loading) {
     return (
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    );
+      <Loading />
+    )
   }
 
   if (!user || user === undefined || user === null) {

@@ -1,17 +1,10 @@
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Alert,
-  Badge,
-  Spinner,
-} from "react-bootstrap";
+import { Container, Row, Col, Alert } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
 import { ButtonComponent } from "../components/Buttons";
+import Loading from "../components/Loading";
 
 const TrainingPlansDetails = () => {
   const [trainingPlans, setTrainingPlans] = useState({});
@@ -72,6 +65,10 @@ const TrainingPlansDetails = () => {
 
   const isAdmin = mongoUser && mongoUser.role === "admin";
 
+  if (loading) {
+    return <Loading />;
+  }
+
   // --------------------------- Render the page ---------------------------
   return (
     <div className="container">
@@ -82,11 +79,6 @@ const TrainingPlansDetails = () => {
       />
 
       <Container className="p-4 my-5 rounded shadow">
-        {loading && (
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        )}
         {error && <Alert variant="danger">{error}</Alert>}
         {trainingPlans && (
           <>

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Spinner, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { UserAuth } from "../context/AuthContext";
 import { ButtonComponent } from "../components/Buttons";
+import Loading from "../components/Loading";
 
 const Welcome = () => {
   /* const [user, setUser] = useState(null); */
@@ -25,13 +26,14 @@ const Welcome = () => {
     return () => unsubscribe();
   }, []);
 
+  if (isLoading) {
+    return (
+      <Loading />
+    )
+  }
+
   return (
     <>
-      {isLoading ? (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      ) : (
         <Container className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-5 col-10">
           <Col xs={12} md={1} className="d-flex flex-column justify-content-center align-items-center gap-2">
             <img
@@ -64,7 +66,6 @@ const Welcome = () => {
             </Row>
           </Col>
         </Container>
-      )}
     </>
   );
 };

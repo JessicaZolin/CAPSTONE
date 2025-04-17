@@ -1,10 +1,11 @@
-import { Container, Row, Col, Pagination, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Pagination } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UserCard from "../components/UserCard";
 import { ButtonComponent } from "../components/Buttons";
+import Loading from "../components/Loading";
 
 function UsersList() {
   const { token } = UserAuth();
@@ -43,6 +44,12 @@ function UsersList() {
     fetchUsers();
   }, [currentPage]);
 
+  if(loading) {
+    return (
+      <Loading />
+    )
+  }
+
   return (
     <div className="container">
       <ButtonComponent
@@ -53,11 +60,6 @@ function UsersList() {
 
       <Container className="my-5">
         <div className="d-flex justify-content-center align-items-center">
-          {loading && (
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          )}
           {error && <p className="text-danger">{error}</p>}
         </div>
         <Row xs={1} md={2} className="g-4">

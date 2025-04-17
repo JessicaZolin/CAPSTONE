@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { ButtonComponent } from "../components/Buttons";
+import Loading from "../components/Loading";
 
 const AllTrainingPlans = () => {
   const [trainingPlans, setTrainingPlans] = useState([]);
@@ -36,6 +37,12 @@ const AllTrainingPlans = () => {
     fetchTrainingPlans();
   }, []);
 
+  if (loading) {
+    return (
+      <Loading />
+    )
+  }
+
   return (
     <div className="container">
       <ButtonComponent text={mongoUser.role === "admin" ? "Admin Dashboard" : "User Dashboard"} as={Link} to={mongoUser.role === "admin" ? "/admin-dashboard" : "/user-dashboard"} />
@@ -43,17 +50,13 @@ const AllTrainingPlans = () => {
       <Container className="d-flex flex-column gap-2 mt-4">
         <Row style={{ height: "100%" }} className="d-flex align-items-center">
           <h3 className="mb-3">Training Plans</h3>
-          {loading && (
-            <Spinner animation="border" role="status" className="m-auto">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          )}
+          
           {error && <p className="text-danger">{error}</p>}
           {!loading && (
             trainingPlans.map((trainingPlan) => (
               <Col key={trainingPlan._id} xs={12} md={8} >
                 <Card
-                  className="col shadow mb-3 background-card selected "
+                  className="col shadow mb-3-card"
                   onClick={() => navigate(`/trainingplans/${trainingPlan._id}`)}
                   style={{ cursor: "pointer" }}
                 >

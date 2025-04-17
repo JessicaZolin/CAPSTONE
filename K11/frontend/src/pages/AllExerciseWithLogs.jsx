@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Spinner, Accordion } from "react-bootstrap";
+import { Container, Row, Col, Accordion } from "react-bootstrap";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { ButtonComponent } from "../components/Buttons";
+import Loading from "../components/Loading";
 
 const AllExerciseWithLogs = () => {
   const [exercises, setExercises] = useState([]);
@@ -34,6 +35,12 @@ const AllExerciseWithLogs = () => {
     fetchExercises();
   }, []);
 
+  if (loading) {
+    return (
+      <Loading /> 
+    )
+  }
+
   return (
     <div className="container">
       <ButtonComponent
@@ -45,11 +52,7 @@ const AllExerciseWithLogs = () => {
       <Container>
         <Row className="d-flex align-items-center mt-4">
           <h3 className="mb-3">All Exercises</h3>
-          {loading ? (
-            <Spinner animation="border" role="status" className="m-auto">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          ) : error ? (
+          {error ? (
             <p className="text-danger">{error}</p>
           ) : (
             exercises.map((exercise) => (

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Alert, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Form, Alert } from "react-bootstrap";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
 import { ButtonComponent } from "../components/Buttons";
+import Loading from "../components/Loading";
 
 const EditExercise = () => {
   const [loading, setLoading] = useState(true);
@@ -109,11 +110,7 @@ const EditExercise = () => {
 
   if (loading)
     return (
-      <Container className="container-main mt-4 d-flex justify-content-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </Container>
+      <Loading />
     );
 
   // --------------------------- Render the form ----------------------------

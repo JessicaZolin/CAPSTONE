@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserAuth } from "../context/AuthContext";
 import { ButtonComponent } from "./Buttons";
+import Loading from "./Loading";
 
 const Weight = () => {
   const [formData, setFormData] = useState({
@@ -108,6 +109,10 @@ const Weight = () => {
       setError("An error occurred while deleting the exercise log.");
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="container border border-1 rounded-3 shadow-sm p-4">

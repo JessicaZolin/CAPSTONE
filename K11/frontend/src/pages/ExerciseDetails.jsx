@@ -1,10 +1,11 @@
-import { Container, Row, Col, Alert, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Alert } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import Weight from "../components/Weight";
 import axios from "axios";
 import { ButtonComponent } from "../components/Buttons";
+import Loading from "../components/Loading";
 
 const ExerciseDetails = () => {
   const [exercise, setExercises] = useState({});
@@ -68,11 +69,7 @@ const ExerciseDetails = () => {
 
   if (loading) {
     return (
-      <Container className="p-4 mt-5 rounded shadow d-flex justify-content-center">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </Container>
+      <Loading />
     );
   }
 

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Spinner, Alert } from "react-bootstrap";
+import { Container, Row, Col, Form, Alert } from "react-bootstrap";
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { ButtonComponent } from "../components/Buttons";
+import Loading from "../components/Loading";
 
 ///// AGGIUNGI FORM PER AGGIUNGERE DATA SCADENZA ABO E CERTIFICATO MEDICO
 
@@ -144,6 +145,12 @@ const AdminManageUserProfile = () => {
     }
   }; */
 
+  if (loading) {
+    return (
+      <Loading />
+    )
+  }
+
   // -------------------------- render the profile page --------------------------
   return (
     <div className="container">
@@ -166,11 +173,6 @@ const AdminManageUserProfile = () => {
               </Button> */}
             </div>
 
-            {loading && (
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
-            )}
             {error && <Alert variant="danger">{error}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
 

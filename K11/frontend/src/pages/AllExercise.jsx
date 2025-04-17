@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
 import ExerciseCard from "../components/ExerciseCard";
 import { useNavigate, Link } from "react-router-dom";
 import { ButtonComponent } from "../components/Buttons";
+import Loading from "../components/Loading";
 
 const AllExercise = () => {
   const [exercises, setExercises] = useState([]);
@@ -37,6 +38,11 @@ const AllExercise = () => {
     fetchExercises();
   }, []);
 
+  if (loading) {
+    return (
+      <Loading />
+    )
+  }
   return (
     <div className="container">
       <ButtonComponent text={"Admin Dashboard"} as={Link} to={"/admin-dashboard"} />
@@ -44,11 +50,7 @@ const AllExercise = () => {
       <Container className="d-flex flex-column gap-2 mt-4">
         <Row style={{ height: "100%" }} className="d-flex align-items-center">
           <h3 className="mb-3">Exercises</h3>
-          {loading && (
-            <Spinner animation="border" role="status" className="m-auto">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          )}
+          
           {error && <p className="text-danger">{error}</p>}
           {!loading &&
             exercises.map((exercise) => (

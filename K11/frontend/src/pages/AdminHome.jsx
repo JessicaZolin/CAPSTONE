@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 import axios from "axios";
 import ExerciseCard from "../components/ExerciseCard";
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 // -----------------------------------------------------------------------------------------------
 
@@ -75,9 +76,7 @@ const AdminHome = () => {
           <Row style={{ height: "100%" }} className="d-flex align-items-center">
             <h3 className="mb-3">Exercises</h3>
             {exercisesLoading && (
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
+              <Loading />
             )}
             {error && <p className="text-danger">{error}</p>}
             {!exercisesLoading &&
@@ -99,16 +98,14 @@ const AdminHome = () => {
           <Row style={{ height: "100%" }} className="d-flex align-items-center">
             <h3 className="mb-3">Training Plans</h3>
             {plansLoading && (
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
+              <Loading />
             )}
             {error && <p className="text-danger">{error}</p>}
             {!plansLoading &&
               trainingPlans.map((trainingPlan) => (
                 <Col key={trainingPlan._id} xs={12}>
                   <Card
-                    className="col shadow mb-3 background-card selected "
+                    className="col shadow mb-3"
                     onClick={() =>
                       navigate(`/trainingplans/${trainingPlan._id}`)
                     }

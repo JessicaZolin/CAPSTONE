@@ -9,8 +9,6 @@ function AdminDashboard() {
   const { user, mongoUser } = UserAuth();
   const navigate = useNavigate();
 
-  console.log(mongoUser, user);
-
   // -----------------------------------------------------------------------------------------------
 
   return (
@@ -55,7 +53,7 @@ function AdminDashboard() {
             <div className="d-flex flex-column flex-md-row justify-content-between gap-md-5">
               {/* --------- CREATE EXERCISES --------- */}
               <Card
-                className="col shadow mb-3 background-card selected"
+                className="col shadow mb-3"
                 onClick={() => navigate(`/exercises/create`)}
                 style={{ cursor: "pointer" }}
               >
@@ -66,7 +64,7 @@ function AdminDashboard() {
 
               {/* --------- CREATE TRAINING PLANS --------- */}
               <Card
-                className="col shadow mb-3 background-card selected"
+                className="col shadow mb-3"
                 onClick={() => navigate(`/trainingplans/create`)}
                 style={{ cursor: "pointer" }}
               >
@@ -83,7 +81,7 @@ function AdminDashboard() {
             <div className="d-flex flex-column flex-md-row justify-content-between gap-md-5">
               {/* --------- ALL EXERCISES --------- */}
               <Card
-                className="col shadow mb-3 background-card selected"
+                className="col shadow mb-3"
                 onClick={() => navigate(`/all-exercises`)}
                 style={{ cursor: "pointer" }}
               >
@@ -94,7 +92,7 @@ function AdminDashboard() {
 
               {/* --------- ALL TRAINING PLANS --------- */}
               <Card
-                className="col shadow mb-3 background-card selected"
+                className="col shadow mb-3"
                 onClick={() => navigate(`/all-trainingplans`)}
                 style={{ cursor: "pointer" }}
               >
@@ -107,7 +105,7 @@ function AdminDashboard() {
 
               {/* --------- USERS EXERCISES --------- */}
               <Card
-                className="col shadow mb-3 background-card selected"
+                className="col shadow mb-3"
                 onClick={() => navigate(`/all-exercises-with-userslog`)}
                 style={{ cursor: "pointer" }}
               >
@@ -127,7 +125,7 @@ function AdminDashboard() {
           <div className="d-flex justify-content-between gap-5">
             {/* --------- USERS --------- */}
             <Card
-              className="col shadow mb-3 background-card selected"
+              className="col shadow mb-3"
               onClick={() => navigate(`/userslist`)}
               style={{ cursor: "pointer" }}
             >
@@ -145,7 +143,7 @@ function AdminDashboard() {
           <div className="d-flex flex-column flex-md-row justify-content-between gap-md-5">
             {/* ----------- MY EXERCISES ----------- */}
             <Card
-              className="col shadow mb-3 background-card selected"
+              className="col shadow mb-3"
               onClick={() => navigate(`/my-exercises`)}
               style={{ cursor: "pointer" }}
             >
@@ -157,7 +155,7 @@ function AdminDashboard() {
 
             {/* ----------- MY PROFILE ----------- */}
             <Card
-              className="col shadow mb-3 background-card selected"
+              className="col shadow mb-3"
               onClick={() => navigate(`/user-profile`)}
               style={{ cursor: "pointer" }}
             >

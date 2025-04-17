@@ -1,9 +1,10 @@
-import { Card, Container, Row, Spinner } from "react-bootstrap";
+import { Card, Container, Row } from "react-bootstrap";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ButtonComponent } from "../components/Buttons";
+import Loading from "../components/Loading";
 
 function AdminSeeUserExercises() {
   const { userId } = useParams();
@@ -39,6 +40,12 @@ function AdminSeeUserExercises() {
     fetchExercises();
   }, []);
 
+  if (loading) {
+    return (
+      <Loading />
+    )
+  }
+
   return (
     <div className="container">
       <ButtonComponent text={"Userslist"} as={Link} to={"/userslist"} />
@@ -48,17 +55,12 @@ function AdminSeeUserExercises() {
           <h4>Here you can see your exercises with their details</h4>
         </Row>
 
-        {loading && (
-          <Spinner animation="border" className="mb-3" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        )}
         {error && <p className="text-danger">{error}</p>}
         <Row className="d-flex align-items-center">
           {!loading &&
             exercises.map((exercise) => (
               <Card
-                className="shadow mb-3 background-card selected"
+                className="shadow mb-3"
                 key={exercise._id}
                 onClick={() => navigate(`/exercises/${exercise._id}`)}
                 style={{ cursor: "pointer" }}

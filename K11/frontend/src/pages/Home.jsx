@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import ExerciseCard from "../components/ExerciseCard";
 import { UserAuth } from "../context/AuthContext";
+import Loading from "../components/Loading";
 
 const Home = () => {
   const [exercises, setExercises] = useState([]);
@@ -34,14 +35,15 @@ const Home = () => {
     fetchExercises();
   }, []);
 
+  if (loading) {
+    return (
+      <Loading />
+    )
+  }
+
   return (
     <>
       <Container className="d-flex flex-column gap-2">
-        {loading && (
-          <Spinner animation="border" role="status" className="m-auto">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        )}
         {error && <p className="text-danger">{error}</p>}
         <Row style={{ height: "100%" }} className="d-flex align-items-center">
           <h3 className="mb-3">Exercises</h3>

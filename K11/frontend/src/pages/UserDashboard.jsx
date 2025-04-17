@@ -1,4 +1,4 @@
-import { Card, Container, Row, Button } from "react-bootstrap";
+import { Card, Container, Row } from "react-bootstrap";
 import { useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { ButtonComponent } from "../components/Buttons";
@@ -7,8 +7,6 @@ function UserDashboard() {
 
   const { user,  mongoUser } = UserAuth();
   const navigate = useNavigate();
-
-  console.log(mongoUser, user);
 
  return (
     <div className="container">
@@ -24,7 +22,7 @@ function UserDashboard() {
         <Row>
           
           <Card
-            className="shadow mb-3 background-card selected"
+            className="shadow mb-3"
             onClick={() => navigate(`/all-trainingplans`)}
             style={{ cursor: "pointer" }}
           >
@@ -35,7 +33,7 @@ function UserDashboard() {
           </Card>
 
           <Card
-            className="shadow mb-3 background-card selected"
+            className="shadow mb-3"
             onClick={() => navigate(`/my-exercises`)}
             style={{ cursor: "pointer" }}
           >
@@ -46,7 +44,7 @@ function UserDashboard() {
           </Card>
 
           <Card
-            className="shadow mb-3 background-card selected"
+            className="shadow mb-3"
             onClick={() => navigate(`/user-profile`)}
             style={{ cursor: "pointer" }}
           >
