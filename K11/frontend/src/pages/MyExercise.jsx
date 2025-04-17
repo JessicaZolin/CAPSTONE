@@ -1,8 +1,9 @@
-import { Card, Container, Row, Button, Spinner } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Card, Container, Row, Spinner } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { ButtonComponent } from "../components/Buttons";
 
 function MyExercise() {
   const { mongoUser, token } = UserAuth();
@@ -39,31 +40,7 @@ function MyExercise() {
 
   return (
     <div className="container">
-      <Button
-        className="container-main align-items-center color-button-546a76-bg-white"
-        onClick={() => {
-          mongoUser?.role === "admin"
-            ? navigate("/admin-dashboard")
-            : navigate("/user-dashboard");
-        }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          className="bi bi-arrow-left mb-1 me-2"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-          />
-        </svg>
-        {mongoUser?.role === "admin"
-          ? "Back to the Admin Dashboard"
-          : "Back to the User Dashboard"}
-      </Button>
+      <ButtonComponent text={mongoUser.role === "admin" ? "Admin Dashboard" : "User Dashboard"} as={Link} to={mongoUser.role === "admin" ? "/admin-dashboard" : "/user-dashboard"}/>
 
       <Container className="mt-5">
         <Row className="mb-3">

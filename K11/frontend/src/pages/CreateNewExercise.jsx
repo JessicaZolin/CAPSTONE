@@ -1,8 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
-import { Form, Button, Container, Row, Col, Alert } from "react-bootstrap";
+import { Form, Container, Row, Col, Alert } from "react-bootstrap";
+import { ButtonComponent } from "../components/Buttons";
+
 
 const CreateNewExercise = () => {
   const [formData, setFormData] = useState({
@@ -60,7 +62,7 @@ const CreateNewExercise = () => {
       );
       if (response.data) {
         // console.log("Post created:", response.data);
-        navigate("/");
+        navigate("/admin-home");
       }
     } catch (error) {
       console.log("Error creating post:", error);
@@ -74,28 +76,10 @@ const CreateNewExercise = () => {
   // ---------------------------- Render the form ----------------------------
   return (
     <div className="container">
-      <Button
-        className="container-main align-items-centercolor-button-546a76-bg-white"
-        onClick={() => navigate("/admin-dashboard")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          className="bi bi-arrow-left mb-1 me-2"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-          />
-        </svg>
-        Back to the Admin Dashboard
-      </Button>
+      <ButtonComponent text={"AdminDashboard"} as={Link} to={"/admin-dashboard"} />
+      
       <Container
-        className="background-card p-4 mt-5 rounded shadow"
-        style={{ marginBottom: "10%" }}
+        className="p-4 my-5 rounded shadow"
       >
         <Row className="justify-content-center">
           <Col xs={12} md={6}>
@@ -156,9 +140,7 @@ const CreateNewExercise = () => {
                   required
                 />
               </Form.Group>
-              <Button className="color-button-546a76" type="submit">
-                Create Exercise
-              </Button>
+              <ButtonComponent text={"Create Exercise"} type={"submit"} />
             </Form>
           </Col>
         </Row>

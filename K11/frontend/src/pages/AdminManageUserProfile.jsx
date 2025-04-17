@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
+import { Container, Row, Col, Form, Spinner, Alert } from "react-bootstrap";
 import { UserAuth } from "../context/AuthContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
+import { ButtonComponent } from "../components/Buttons";
 
 ///// AGGIUNGI FORM PER AGGIUNGERE DATA SCADENZA ABO E CERTIFICATO MEDICO
 
 const AdminManageUserProfile = () => {
-  const { token, setMongoUser } = UserAuth();
+  const { token } = UserAuth();
   const { userId } = useParams(); // Get the userId from the URL parameters
-  console.log(userId);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -83,13 +83,13 @@ const AdminManageUserProfile = () => {
       formDataToSend.append("AboExpiration", formData.AboExpiration || "");
 
       // Better FormData logging
-      for (let pair of formDataToSend.entries()) {
+      /* for (let pair of formDataToSend.entries()) {
         if (pair[1] instanceof File) {
           console.log(`${pair[0]}: File - ${pair[1].name} (${pair[1].type})`);
         } else {
           console.log(`${pair[0]}: ${pair[1]}`);
         }
-      }
+      } */
 
       const response = await axios.patch(
         `${process.env.REACT_APP_BACKEND_URL}/users/${userId}`,
@@ -147,29 +147,10 @@ const AdminManageUserProfile = () => {
   // -------------------------- render the profile page --------------------------
   return (
     <div className="container">
-      <Button
-        className="container-main align-items-center color-button-546a76-bg-white"
-        onClick={() => navigate("/userslist")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          className="bi bi-arrow-left mb-1 me-2"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-          />
-        </svg>
-        Back to the Userslist
-      </Button>
+      <ButtonComponent text={"Userslist"} as={Link} to={"/userslist"} />
 
       <Container
-        className="background-card p-4 mt-5 rounded shadow"
-        style={{ marginBottom: "100px" }}
+        className="p-4 my-5 rounded shadow"
       >
         <Row className="justify-content-center">
           <Col md={6}>
@@ -185,7 +166,11 @@ const AdminManageUserProfile = () => {
               </Button> */}
             </div>
 
-            {loading && <p>Loading...</p>}
+            {loading && (
+              <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </Spinner>
+            )}
             {error && <Alert variant="danger">{error}</Alert>}
             {success && <Alert variant="success">{success}</Alert>}
 
@@ -253,13 +238,11 @@ const AdminManageUserProfile = () => {
                 />
               </Form.Group>
 
-              <Button
-                type="submit"
-                className="w-100 color-button-546a76"
-                size="lg"
-              >
-                Update Profile
-              </Button>
+              <ButtonComponent
+                text={"Update Profile"}
+                type={"submit"}
+                className={"w-100"}
+              />
             </Form>
           </Col>
         </Row>

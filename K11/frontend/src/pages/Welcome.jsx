@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Button, Spinner, Col } from "react-bootstrap";
+import { Container, Row, Spinner, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";

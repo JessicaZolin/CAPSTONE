@@ -1,8 +1,9 @@
-import { Form, Button, Alert, ListGroup } from "react-bootstrap";
+import { Form, Alert, ListGroup } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserAuth } from "../context/AuthContext";
+import { ButtonComponent } from "./Buttons";
 
 const Weight = () => {
   const [formData, setFormData] = useState({
@@ -33,7 +34,6 @@ const Weight = () => {
         }
       );
       setExerciseLogs(response.data);
-      console.log(response.data);
     } catch (err) {
       console.error(err.message);
       setError("An error occurred while fetching the exercise log.");
@@ -91,23 +91,23 @@ const Weight = () => {
     }
   };
 
-    // ---------------------------- Function to handle exercise log deletion ----------------------------
-    const handleDelete = async (logId) => {
-      try {
-        await axios.delete(
-          `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/exercise/${exerciseId}/${logId}`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        fetchSingleExerciseLog();
-      } catch (err) {
-        console.error(err.message);
-        setError("An error occurred while deleting the exercise log.");
-      }
+  // ---------------------------- Function to handle exercise log deletion ----------------------------
+  const handleDelete = async (logId) => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/exercise/${exerciseId}/${logId}`,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      fetchSingleExerciseLog();
+    } catch (err) {
+      console.error(err.message);
+      setError("An error occurred while deleting the exercise log.");
     }
+  };
 
   return (
     <div className="container border border-1 rounded-3 shadow-sm p-4">
@@ -123,22 +123,24 @@ const Weight = () => {
               {exerciseLogs.map((exerciseLog) => (
                 <ListGroup.Item
                   key={exerciseLog._id}
-                  className="d-flex justify-content-between align-items-center bg-transparent shadow-sm"
+                  className="d-flex justify-content-between align-items-center bg-transparent shadow-sm flex-wrap"
                 >
-                  <div className="me-auto d-flex gap-3 col">
+                  <div className=" d-flex col col-md-3">
                     {exerciseLog.date
                       ? new Date(exerciseLog.date).toLocaleDateString()
                       : "No date provided"}
-                    <div className="fw-bold col-2">{exerciseLog.weight.value} kg</div>
-                    <div className="text-muted col me-2">{exerciseLog.notes}</div>
                   </div>
-                  <Button
-                    className="color-button-delete"
-                    size="sm"
-                     onClick={() => handleDelete(exerciseLog._id)}
-                  >
-                    Delete
-                  </Button>
+                  <div className="fw-bold col col-md-2">
+                    {exerciseLog.weight.value} kg
+                  </div>
+                  <div className="text-muted col-12 col-md-6 me-2 mt-2 mt-md-0 d-flex align-items-center justify-content-between">
+                    <div>{exerciseLog.notes}</div>
+                    <ButtonComponent
+                      text={"Delete"}
+                      onClick={() => handleDelete(exerciseLog._id)}
+                      className={"mt-3 mt-md-0"}
+                    />
+                  </div>
                 </ListGroup.Item>
               ))}
             </ListGroup>
@@ -191,10 +193,7 @@ const Weight = () => {
             />
           </Form.Group>
         </div>
-        <Button variant="primary" type="submit" disabled={loading}>
-          {" "}
-          Add new log{" "}
-        </Button>
+        <ButtonComponent text={"Add new log"} type={"submit"} />
       </Form>
     </div>
   );

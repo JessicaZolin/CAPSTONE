@@ -36,7 +36,7 @@ const NavBar = () => {
   // ---------------------------- Render the navbar ----------------------------
   return (
     <Navbar
-      className="fixed-top shadow-sm background-546a76 text-white"
+      className="fixed-top text-white"
       expand="lg"
       // ---------------------------- Set the expanded state of the navbar
       expanded={expanded}

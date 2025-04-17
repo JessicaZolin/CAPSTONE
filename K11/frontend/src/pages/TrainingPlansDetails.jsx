@@ -1,9 +1,17 @@
-import { Container, Row, Col, Button, Alert, Badge } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Alert,
+  Badge,
+  Spinner,
+} from "react-bootstrap";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import axios from "axios";
-
+import { ButtonComponent } from "../components/Buttons";
 
 const TrainingPlansDetails = () => {
   const [trainingPlans, setTrainingPlans] = useState({});
@@ -67,34 +75,20 @@ const TrainingPlansDetails = () => {
   // --------------------------- Render the page ---------------------------
   return (
     <div className="container">
-      <Button
-        className="container-main align-items-center color-button-546a76-bg-white"
-        onClick={() => { isAdmin ? navigate(`/Admin-home`) : navigate("/") }}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          className="bi bi-arrow-left mb-1 me-2"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-          />
-        </svg>
-        Back to the Homepage
-      </Button>
+      <ButtonComponent
+        text={"Homepage"}
+        as={Link}
+        to={mongoUser.role === "admin" ? "/admin-home" : "/"}
+      />
 
-
-      <Container
-        className="background-card p-4 mt-5 rounded shadow"
-        style={{ marginBottom: "100px" }}
-      >
-        {loading && <p>Loading...</p>}
+      <Container className="p-4 my-5 rounded shadow">
+        {loading && (
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )}
         {error && <Alert variant="danger">{error}</Alert>}
-        {trainingPlans  && (
+        {trainingPlans && (
           <>
             <Row className="mb-4">
               <Col xs={12} md={8} style={{ minHeight: "300px" }}>
@@ -103,34 +97,29 @@ const TrainingPlansDetails = () => {
                   style={{ borderBottom: "1px solid #ccc" }}
                 >
                   <small className="text-muted">
-                    {new Date(trainingPlans.createdAt).toLocaleString().split(",")[0]}
+                    {
+                      new Date(trainingPlans.createdAt)
+                        .toLocaleString()
+                        .split(",")[0]
+                    }
                   </small>
                 </div>
-                <div
-                  className="d-flex justify-content-between align-items-start"
-                >
+                <div className="d-flex justify-content-between align-items-start">
                   <h1 className="col-8">{trainingPlans.name}</h1>
 
                   {/* --------------------------- verify if the user is the author of the post and show the edit and delete buttons */}
                   {isAdmin && (
                     <div className="mt-2">
-                      <Button
-                        className="me-2 color-button-546a76"
-                        onClick={() => navigate(`/trainingplans/edit/${trainingPlans._id}`)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        className="color-button-delete mt-lg-0 mt-2 mt-sm-0"
-                        onClick={handleDelete}
-                      >
-                        Delete
-                      </Button>
+                      <ButtonComponent
+                        text={"Edit"}
+                        as={Link}
+                        to={`/trainingplans/edit/${trainingPlans._id}`}
+                      />
+                      <ButtonComponent text={"Delete"} onClick={handleDelete} />
                     </div>
                   )}
                 </div>
                 <p style={{ minHeight: "50%" }}>{trainingPlans.description}</p>
-
               </Col>
             </Row>
           </>

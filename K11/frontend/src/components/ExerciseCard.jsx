@@ -8,14 +8,14 @@ const ExerciseCard = ({ exercise }) => {
   return (
     <>
     <Card xs={12} md={6} lg={4}
-      className="shadow mb-3 border background-card"
+      className="mb-3 border shadow"
       onClick={() => navigate(`/exercises/${exercise._id}`)}
-      style={{ cursor: "pointer", height: "270px"}}
+      style={{ cursor: "pointer", height: "280px"}}
     >
       <Card.Img
         variant="top"
         src={exercise.cover}
-        style={{ height: "200px", objectFit: "cover" }}
+        style={{ minHeight: "200px", objectFit: "cover" }}
       />
       <Card.Body>
         <Card.Title>{exercise.name}</Card.Title>

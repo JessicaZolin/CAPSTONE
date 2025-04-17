@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Spinner, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import { ButtonComponent } from "../components/Buttons";
 
 const AllTrainingPlans = () => {
   const [trainingPlans, setTrainingPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { token } = UserAuth();
+  const { token, mongoUser } = UserAuth();
 
   useEffect(() => {
     const fetchTrainingPlans = async () => {
@@ -37,27 +38,9 @@ const AllTrainingPlans = () => {
 
   return (
     <div className="container">
-      <Button
-        className="container-main align-items-center color-button-546a76-bg-white mb-5"
-        onClick={() => navigate("/user-dashboard")}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          className="bi bi-arrow-left mb-1 me-2"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fillRule="evenodd"
-            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-          />
-        </svg>
-        Back to the User Dashboard
-      </Button>
+      <ButtonComponent text={mongoUser.role === "admin" ? "Admin Dashboard" : "User Dashboard"} as={Link} to={mongoUser.role === "admin" ? "/admin-dashboard" : "/user-dashboard"} />
 
-      <Container className="d-flex flex-column gap-2">
+      <Container className="d-flex flex-column gap-2 mt-4">
         <Row style={{ height: "100%" }} className="d-flex align-items-center">
           <h3 className="mb-3">Training Plans</h3>
           {loading && (
@@ -68,7 +51,7 @@ const AllTrainingPlans = () => {
           {error && <p className="text-danger">{error}</p>}
           {!loading && (
             trainingPlans.map((trainingPlan) => (
-              <Col key={trainingPlan._id} xs={12} md={8} className="mb-5">
+              <Col key={trainingPlan._id} xs={12} md={8} >
                 <Card
                   className="col shadow mb-3 background-card selected "
                   onClick={() => navigate(`/trainingplans/${trainingPlan._id}`)}

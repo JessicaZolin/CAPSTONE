@@ -36,3 +36,19 @@
 }
 
 
+.accordion-button:not(.collapsed) {
+  background-color: #000 !important;
+  color: #e2e8f0 !important;
+}
+
+
+.page-link {
+  color: #000 !important;
+  background-color: transparent !important;
+}
+
+.active>.page-link {
+  border-color: #e2e8f0 !important;
+  background-color: #000 !important;
+  color: #e2e8f0 !important;
+}
