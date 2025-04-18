@@ -59,8 +59,8 @@ const AllExerciseWithLogs = () => {
               <Col key={exercise._id} xs={12} className="mb-5">
                 <Accordion defaultActiveKey={null}>
                   <Accordion.Item eventKey={exercise._id}>
-                    <Accordion.Header className="d-flex justify-content-between align-items-center gap-5">
-                      <span>
+                    <Accordion.Header className="d-flex justify-content-evenly align-items-center">
+                      <span className="col-6">
                         <h5 className="mb-0 me-2">{exercise.exercise.name}</h5>
                       </span>{" "}
                       <span>( {exercise.userLogs.length} Users )</span>

@@ -9,6 +9,7 @@ export const ButtonComponent = ({
   as,
   to,
   className,
+  style,
 }) => {
   return (
     <Button
@@ -18,6 +19,7 @@ export const ButtonComponent = ({
       to={to}
       className={className}
       onClick={onClick}
+      style={style}
     >
         
       {svg}

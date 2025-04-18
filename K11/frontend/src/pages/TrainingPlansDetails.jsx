@@ -71,6 +71,7 @@ const TrainingPlansDetails = () => {
   // --------------------------- Render the page ---------------------------
   return (
     <div className="container">
+      <ButtonComponent text={"All Training Plans"} as={Link} to="/all-trainingplans" />
       <ButtonComponent
         text={"Homepage"}
         as={Link}
@@ -95,12 +96,12 @@ const TrainingPlansDetails = () => {
                     }
                   </small>
                 </div>
-                <div className="d-flex justify-content-between align-items-start">
-                  <h1 className="col-8">{trainingPlans.name}</h1>
+                <div className="d-flex justify-content-between align-items-center">
+                  <h1 className="col-7 col-md mb-4">{trainingPlans.name}</h1>
 
                   {/* --------------------------- verify if the user is the author of the post and show the edit and delete buttons */}
                   {isAdmin && (
-                    <div className="mt-2">
+                    <div>
                       <ButtonComponent
                         text={"Edit"}
                         as={Link}
@@ -110,7 +111,7 @@ const TrainingPlansDetails = () => {
                     </div>
                   )}
                 </div>
-                <p style={{ minHeight: "50%" }}>{trainingPlans.description}</p>
+                <p style={{ minHeight: "50%", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{trainingPlans.description}</p>
               </Col>
             </Row>
           </>

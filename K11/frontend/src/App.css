@@ -24,6 +24,13 @@
     background-color: #000 !important;
     border: #e2e8f0 solid 1px !important;
   }
+
+  @media screen and (max-width: 400px) {
+    font-size: 15px;
+    padding: 6px;
+    min-width: 50px;
+    
+  }
 }
 
 .card:hover {
@@ -38,12 +45,12 @@
 
 
 .page-link {
-  color: #000 !important;
+  color: #e2e8f0 !important;
   background-color: transparent !important;
 }
 
 .active>.page-link {
   border-color: #e2e8f0 !important;
-  background-color: #000 !important;
-  color: #e2e8f0 !important;
+  background-color: #e2e8f0 !important;
+  color: #000 !important;
 }

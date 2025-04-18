@@ -101,12 +101,12 @@ const ExerciseDetails = () => {
                     }
                   </small>
                 </div>
-                <div className="d-flex justify-content-between align-items-start">
+                <div className="d-flex justify-content-between align-items-center">
                   <h1 className="col-6 col-md-8">{exercise.name}</h1>
 
                   {/* --------------------------- verify if the user is the author of the post and show the edit and delete buttons */}
                   {isAdmin && (
-                    <div className="mt-2">
+                    <div>
                       <ButtonComponent
                         text={"Edit"}
                         as={Link}

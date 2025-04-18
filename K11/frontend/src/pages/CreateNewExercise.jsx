@@ -136,6 +136,9 @@ const CreateNewExercise = () => {
                     setFormData({ ...formData, description: e.target.value })
                   }
                   required
+                  style={{
+                    whiteSpace: "pre-wrap",
+                  }}
                 />
               </Form.Group>
               <ButtonComponent text={"Create Exercise"} type={"submit"} />

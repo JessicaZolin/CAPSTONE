@@ -134,9 +134,9 @@ const UserProfile = () => {
         <Row className="justify-content-center">
           <Col md={6}>
             {/* -------------------------- manage profile -------------------------- */}
-            <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-between align-items-center mb-4">
               <h2 className="title">Manage Profile</h2>
-              <ButtonComponent text={"Delete Profile"} type={"submit"} onClick={handleDeleteProfile}/>
+              <ButtonComponent text={"Delete Profile"} type={"submit"} onClick={handleDeleteProfile} />
             </div>
 
             {error && <Alert variant="danger">{error}</Alert>}
@@ -177,7 +177,7 @@ const UserProfile = () => {
               </Form.Group>
 
               {/* -------------------------- Input field for profile image -------------------------- */}
-              <h4 className="mt-5 title">Change profile image</h4>
+              <h4 className="mt-5 mb-4 title">Change profile image</h4>
 
               <Form.Group controlId="formFile" className="mb-3">
                 <Form.Label>Profile image</Form.Label>
