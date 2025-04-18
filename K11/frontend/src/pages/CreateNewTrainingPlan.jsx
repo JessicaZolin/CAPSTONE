@@ -13,7 +13,6 @@ const CreateNewTrainingPlan = () => {
   const [error, setError] = useState("");
   const { user, mongoUser, token } = UserAuth();
   const navigate = useNavigate();
-  // console.log("mongoUser: ", mongoUser, "user: ", user, "token: ", token);
 
 
   // ---------------------------- Function to handle form input changes ----------------------------
@@ -43,7 +42,6 @@ const CreateNewTrainingPlan = () => {
         }
       );
       if (response.data) {
-        // console.log("Post created:", response.data);
         navigate("/admin-home");
       }
     } catch (error) {

@@ -18,7 +18,6 @@ const CreateNewExercise = () => {
   const [error, setError] = useState("");
   const { user, mongoUser, token } = UserAuth();
   const navigate = useNavigate();
-  // console.log("mongoUser: ", mongoUser, "user: ", user, "token: ", token);
 
   // ---------------------------- Function to handle cover image change ----------------------------
   const handleImageChange = (e) => {
@@ -61,7 +60,6 @@ const CreateNewExercise = () => {
         }
       );
       if (response.data) {
-        // console.log("Post created:", response.data);
         navigate("/admin-home");
       }
     } catch (error) {

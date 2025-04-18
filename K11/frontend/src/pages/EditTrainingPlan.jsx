@@ -31,8 +31,6 @@ const EditTrainingPlan = () => {
           }
         );
         const trainingPlan = response.data.trainingPlan;
-        console.log(trainingPlan);
-        console.log(trainingPlan.name);
 
         setFormData({
           name: trainingPlan.name,

@@ -61,8 +61,6 @@ const Weight = () => {
       notes: formData.notes,
     };
 
-    console.log(formDataToSend);
-
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/exerciselogs/exercise/${exerciseId}`,
@@ -83,7 +81,6 @@ const Weight = () => {
         date: "",
         notes: "",
       });
-      console.log(response.data);
     } catch (err) {
       console.error(err.message);
       setError("An error occurred while submitting the form.");

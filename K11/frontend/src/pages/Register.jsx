@@ -37,7 +37,6 @@ const Register = () => {
         formData.MedicalCertificate,
         formData.AboExpiration
       );
-      console.log("Response from registerWithEmailAndPassword:", response);
 
       // Check if the response is a Firebase error and show the error message
       if (typeof response === "string") {

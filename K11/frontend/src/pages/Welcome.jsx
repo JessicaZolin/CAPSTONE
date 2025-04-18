@@ -17,7 +17,6 @@ const Welcome = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
-        console.log("Current user:", currentUser);
       }
       setIsLoading(false); // Set loading state to false once the user is determined
     });

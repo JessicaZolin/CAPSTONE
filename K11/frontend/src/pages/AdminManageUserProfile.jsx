@@ -110,7 +110,6 @@ const AdminManageUserProfile = () => {
         error?.response?.data?.message ||
           "Something went wrong while updating profile."
       );
-      // console.log(error);
       setSuccess("");
     }
   };

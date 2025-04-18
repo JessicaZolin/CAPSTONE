@@ -7,7 +7,6 @@ import { ButtonComponent } from "../components/Buttons";
 
 const UserProfile = () => {
   const { mongoUser, token, setMongoUser, setUser } = UserAuth();
-  console.log(mongoUser);
   const [formData, setFormData] = useState({
     firstName: mongoUser?.firstName || "",
     lastName: mongoUser?.lastName || "",
@@ -25,13 +24,11 @@ const UserProfile = () => {
     if (file) {
       setProfileImage(file);
       setPreviewUrl(URL.createObjectURL(file));
-      console.log(file);
     }
   };
 
   useEffect(() => {
     if (profileImage) {
-      console.log(profileImage);
     }
   }, [profileImage]);
 
@@ -52,22 +49,17 @@ const UserProfile = () => {
       formDataToSend.append("firstName", formData.firstName);
       formDataToSend.append("lastName", formData.lastName);
       if (profileImage) {
-        console.log(profileImage, {
-          name: profileImage.name,
-          type: profileImage.type,
-          size: profileImage.size,
-        });
         formDataToSend.append("profileImage", profileImage);
       }
 
       // Better FormData logging
-      for (let pair of formDataToSend.entries()) {
+      /* for (let pair of formDataToSend.entries()) {
         if (pair[1] instanceof File) {
           console.log(`${pair[0]}: File - ${pair[1].name} (${pair[1].type})`);
         } else {
           console.log(`${pair[0]}: ${pair[1]}`);
         }
-      }
+      } */
 
       const response = await axios.patch(
         `${process.env.REACT_APP_BACKEND_URL}/me/image`,
@@ -90,7 +82,6 @@ const UserProfile = () => {
         error?.response?.data?.message ||
           "Something went wrong while updating profile."
       );
-      // console.log(error);
       setSuccess("");
     }
   };
@@ -111,14 +102,13 @@ const UserProfile = () => {
       setError("");
       setPreviewUrl("");
       setProfileImage(null);
-      /*  navigate("/welcome") */ setMongoUser(null);
+      setMongoUser(null);
       setUser(null);
     } catch (error) {
       setError(
         error?.response?.data?.message ||
           "Something went wrong while deleting profile."
       );
-      // console.log(error);
       setSuccess("");
     } finally {
       return navigate("/welcome");

@@ -49,8 +49,6 @@ const Login = () => {
       // Call the function to login the user with Google in Firebase
       const response = await googleSignIn();
 
-      console.log("Response from googleSignIn:", response);
-
       // Get the token from the response
       // const token = await response.getIdToken();
 

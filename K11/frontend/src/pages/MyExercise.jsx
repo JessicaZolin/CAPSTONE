@@ -24,7 +24,6 @@ function MyExercise() {
           },
         }
       );
-      console.log(response.data);
       setExercises(response.data);
       setError(null);
     } catch (error) {

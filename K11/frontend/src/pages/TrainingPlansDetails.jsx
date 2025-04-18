@@ -27,7 +27,6 @@ const TrainingPlansDetails = () => {
             },
           }
         );
-        console.log("Training plans response:", response.data);
         setTrainingPlans(response.data.trainingPlan);
         setError(null);
       } catch (error) {

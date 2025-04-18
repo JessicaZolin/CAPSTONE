@@ -4,7 +4,6 @@ import Loading from "../components/Loading";
 
 const AdminRoutes = () => {
   const { user, loading, mongoUser } = UserAuth();
-  console.log(user, loading, mongoUser);
 
   if (loading) {
     return (
