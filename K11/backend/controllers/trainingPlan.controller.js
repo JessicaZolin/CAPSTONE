@@ -1,7 +1,7 @@
 import TrainingPlan from "../models/TrainingPlan.js";
 
 // Create a new training plan
-export async function createTrainingPlan(request, resposnse) {
+export async function createTrainingPlan(request, response) {
   try {
     const { name, description } = request.body;
     const newTrainingPlan = new TrainingPlan({
@@ -9,10 +9,10 @@ export async function createTrainingPlan(request, resposnse) {
       description,
     });
     await newTrainingPlan.save();
-    resposnse.status(201).json(newTrainingPlan);
+    response.status(201).json(newTrainingPlan);
   } catch (error) {
     console.error(error);
-    resposnse.status(500).json({ message: "Internal Server Error" });
+    response.status(500).json({ message: "Internal Server Error" });
   }
 }
 

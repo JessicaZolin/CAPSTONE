@@ -24,23 +24,6 @@ export const AuthContextProvider = ({ children }) => {
 
   // -------------------------------------------------------- monitor authentication state
   useEffect(() => {
-    /* let isMounted = true; */
-    // Gestisce il risultato del redirect quando l'utente torna
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result?.user) {
-          setUser(result.user);
-          console.log("Redirect successful:", result.user);
-        }
-      } catch (error) {
-        console.error("Redirect error:", error);
-      }
-    };
-    handleRedirectResult();
-
-    // ---------------------------------------------------------------------------------------
-
     const fetchUserData = async (token) => {
       try {
         const response = await axios.get(
@@ -62,6 +45,7 @@ export const AuthContextProvider = ({ children }) => {
     // ---------------------------------------------------------------------------------------
 
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      // Protezione: aspetta di aver gestito il redirect
       try {
         if (currentUser) {
           const token = await currentUser.getIdToken();
@@ -136,7 +120,11 @@ export const AuthContextProvider = ({ children }) => {
         console.log("Login with Google failed");
       }
 
-      // const userCredential = await signInWithRedirect(auth, provider);
+
+      // --------------- call the signInWithRedirect function
+      
+      // const userCredential = signInWithRedirect(auth, provider);
+      // console.log("userCredential: ", userCredential);
       // we don't need to handle the userCredential here, as it will be handled in the onAuthStateChanged listener
     } catch (error) {
       console.log("Google sign in error:", error);
@@ -189,7 +177,7 @@ export const AuthContextProvider = ({ children }) => {
         // get the user data from the backend response
         const userDataMONGO = await backendResponse.data.user;
         console.log("User data from backend:", userDataMONGO);
-        return { userCredential, findedToken, userCredential };
+        return { userCredential, findedToken };
       } else {
         console.log("Registration faild");
       }

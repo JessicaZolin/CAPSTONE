@@ -2,8 +2,13 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig.js";
 import { Container, Row, Col, Form, Alert } from "react-bootstrap";
-import { getRedirectResult, sendPasswordResetEmail } from "firebase/auth";
-import { GoogleButton } from "react-google-button";
+import {
+  getRedirectResult,
+  sendPasswordResetEmail,
+  getAuth,
+  GoogleAuthProvider,
+  signInWithRedirect,
+} from "firebase/auth";
 import { UserAuth } from "../context/AuthContext.jsx";
 import axios from "axios";
 import { ButtonComponent } from "../components/Buttons.jsx";
@@ -17,12 +22,101 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { googleSignIn, emailAndPasswordSingIn, user, mongoUser, token } =
-    UserAuth();
+  const {
+    googleSignIn,
+    emailAndPasswordSingIn,
+    user,
+    mongoUser,
+    token,
+    setUser,
+    setMongoUser,
+  } = UserAuth();
+
+  // -------------------------------------------------------- Handle redirect result from Google sign-in
+
+  useEffect(() => {
+  const handleNavigation = () => {
+    // Check if both Firebase and MongoDB user are loaded
+    if (user && mongoUser) {
+      // Check user role and navigate accordingly
+      if (mongoUser.role === "admin") {
+        navigate("/admin-home");
+      } else {
+        navigate("/");
+      }
+    } else if (!user) {
+      // Only navigate to login if there's no user
+      // This prevents infinite redirect loops
+      navigate("/login");
+    }
+    // Don't navigate if we're still waiting for mongoUser
+  };
+
+  handleNavigation();
+}, [user, mongoUser, navigate]); // Add mongoUser to dependencies
+
+  /* useEffect(() => {
+    console.log("Login mounted")
+
+  const handleRedirectResult = async () => {
+    console.log("handleRedirectResult called");
+      try {
+        const result = await getRedirectResult(auth);
+
+        console.log("result: ", result);
+
+        if (result?.user) {
+          // Get the token from the response
+          const token = await result.user.getIdToken();
+          console.log("token: ", token);
+          console.log("user: ", result.user);
+          /* try {
+            // Save user data to mongoDB
+            const response = await axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/login-google`,
+              result.user,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: token,
+                },
+              }
+            );
+
+            // get the user data from the backend response
+            const userData = await response.data.user;
+            console.log("user data: ", userData);
+
+            setUser(result.user);
+            setMongoUser(userData);
+
+            if (userData.role === "admin") {
+              navigate("/admin-home");
+            } else {
+              navigate("/");
+            }
+          } catch (error) {
+            console.error("Error saving user data:", error);
+            setError(error.message);
+          }
+        } else {
+          console.log("No user found in result");
+        }
+     /*  } catch (error) {
+        console.error("Redirect error:", error);
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    handleRedirectResult();
+  }, [/* setUser, navigate ]); */
 
   // -------------------------------------------------------- Handle form login with email and password
   const onSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setIsLoading(true);
 
     try {
       // Call the function to login the user with email and password in Firebase passing the email and password from the form data
@@ -43,66 +137,72 @@ const Login = () => {
   // -------------------------------------------------------- Handle sign in with google
   const handleGoogleSignIn = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Set loading state to true
-
+    setError(null);
+    setIsLoading(true);
     try {
       // Call the function to login the user with Google in Firebase
-      const response = await googleSignIn();
-
-      // Get the token from the response
-      // const token = await response.getIdToken();
-
-      // If the response and token are available, call the backend to register the user with the token and the data from the response
-      /* if (response) {
-        const backendResponse = await axios.post(
-          `${process.env.REACT_APP_BACKEND_URL}/login-google`,
-          response.user,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: response.token,
-            },
-          }
-        );
-        // get the user data from the backend response
-        const userData = await backendResponse.data.user;
-        console.log("user data: ", userData); 
-        
-        setIsLoading(false); // Set loading state to false
-      } else {
-        // Handle error message
-        setError("Login with Google failed");
-      } */
+      googleSignIn();
     } catch (error) {
       console.log(error);
       setError(error.message || "An error occurred during login with Google");
-    } finally {
-      setIsLoading(false); // Set loading state to false
     }
+
+    // ------------------------------------ SIGNINWITHREDIRECT()--------------------------------------------
+    /*  try {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: "select_account",
+    });
+
+
+
+      // Call the function to login the user with Google in Firebase
+      const userCredential = await signInWithRedirect(auth, provider);
+      console.log("userCredential: ", userCredential);
+    } catch (error) {
+      console.log(error);
+      setError(error.message || "An error occurred during login with Google");
+    } */
   };
 
-  // -------------------------------------------------------- Handle redirect result from Google sign-in
+  // ------------------------------------------GETREDITECTRESULT()--------------------------------------------
 
-  useEffect(() => {
-    const handleNavigation = () => {
-      // Check if both Firebase and MongoDB user are loaded
-      if (user && mongoUser) {
-        // Check user role and navigate accordingly
-        if (mongoUser.role === "admin") {
-          navigate("/admin-home");
-        } else {
-          navigate("/");
+ /*  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        console.log("result: ", result);
+        if (result?.user) {
+          const token = await result.user.getIdToken();
+
+          // Chiama il backend per salvare l'utente su MongoDB
+          const response = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/login-google`,
+            result.user,
+            {
+              headers: {
+                Authorization: token,
+              },
+            }
+          );
+
+          const userData = response.data.user;
+          console.log("✅ Utente Mongo salvato:", userData);
+
+          // Poi redirect dove vuoi
+          if (userData.role === "admin") {
+            navigate("/admin-home");
+          } else {
+            navigate("/");
+          }
         }
-      } else if (!user) {
-        // Only navigate to login if there's no user
-        // This prevents infinite redirect loops
-        navigate("/login");
+      } catch (err) {
+        console.error("❌ Errore nel redirect login:", err);
       }
-      // Don't navigate if we're still waiting for mongoUser
     };
 
-    handleNavigation();
-  }, [user, mongoUser, navigate]); // Add mongoUser to dependencies
+    handleRedirectResult();
+  }, [navigate]); */
 
   const handlePasswordReset = () => {
     // Implement password reset functionality here
@@ -181,9 +281,9 @@ const Login = () => {
                         <g
                           id="Google-Button"
                           stroke="none"
-                          stroke-width="1"
+                          strokeWidth="1"
                           fill="none"
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                         >
                           <rect
                             x="0"

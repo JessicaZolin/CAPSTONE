@@ -33,8 +33,8 @@ const Welcome = () => {
 
   return (
     <>
-        <Container className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-5 col-10">
-          <Col xs={12} md={1} className="d-flex flex-column justify-content-center align-items-center gap-2">
+        <Container className="d-flex flex-column flex-lg-row justify-content-center align-items-center gap-5 col-10">
+          <Col xs={12} lg={1} className="d-flex flex-column justify-content-center align-items-center gap-2">
             <img
               src="https://res.cloudinary.com/da9papeuy/image/upload/v1743969268/IMG_7617_asvxyk.jpg"
               alt="Logo"
@@ -42,11 +42,11 @@ const Welcome = () => {
               style={{ width: "100px", height: "100px" }}
             />
           </Col>
-          <Col xs={12} md={4} className="d-flex flex-column justify-content-center align-items-center gap-2 bg-black text-white rounded">
+          <Col xs={12} lg={4} className="d-flex flex-column justify-content-center align-items-center gap-2 bg-black text-white rounded">
             <h1>Benvenuto in K11</h1>
             <h2>BE YOUR BEST SELF</h2>
           </Col>
-          <Col xs={12} md={2}>
+          <Col xs={12} lg={2}>
             <Row className="d-flex gap-2" > 
               <ButtonComponent
                 text={"Login"}

@@ -68,9 +68,7 @@ const ExerciseDetails = () => {
   const isAdmin = mongoUser && mongoUser.role === "admin";
 
   if (loading) {
-    return (
-      <Loading />
-    );
+    return <Loading />;
   }
 
   // --------------------------- Render the page ---------------------------
@@ -83,12 +81,12 @@ const ExerciseDetails = () => {
       />
       <ButtonComponent text={"My Exercises"} as={Link} to={"/my-exercises"} />
 
-      <Container className="p-4 my-5 rounded shadow ">
+      <Container className="p-4 my-5 rounded shadow">
         {error && <Alert variant="danger">{error}</Alert>}
         {exercise && exercise._id && (
           <>
             <Row className="mb-4">
-              <Col xs={12} md={8}>
+              <Col xs={12} md={8} >
                 <div
                   className="d-flex align-items-center pb-3 mb-2 gap-4"
                   style={{ borderBottom: "1px solid #ccc" }}
@@ -116,22 +114,30 @@ const ExerciseDetails = () => {
                     </div>
                   )}
                 </div>
-                <p style={{ minHeight: "50%" }}>{exercise.description}</p>
+                <p className="d-none d-md-block"
+                  style={{
+                    minHeight: "50%",
+                    whiteSpace: "pre-wrap",
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {exercise.description}
+                </p>
               </Col>
               <Col
                 xs={12}
                 md={4}
-                className="d-flex justify-content-center d-none d-md-flex"
+                className="d-flex justify-content-center"
               >
                 <img
                   src={exercise.cover}
                   alt={exercise.title}
-                  className="img-fluid rounded shadow object-fit-cover"
-                  style={{ maxHeight: "300px", marginTop: "60px" }}
+                  className="img-fluid rounded shadow object-fit-cover mt-3 mt-md-5"
+                  style={{ maxHeight: "300px"}}
                 />
               </Col>
             </Row>
-            <Row>
+            <Row className="mt-4">
               <Col xs={12} md={8}>
                 <Weight id={exercise._id} />
               </Col>

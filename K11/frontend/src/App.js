@@ -29,6 +29,7 @@ import AllExerciseWithLogs from "./pages/AllExerciseWithLogs";
 import AllExercise from "./pages/AllExercise";
 
 function App() {
+  
   return (
     <AuthContextProvider>
       <Router>
