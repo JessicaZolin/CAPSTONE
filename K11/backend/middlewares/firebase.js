@@ -9,9 +9,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Read and parse the service account file
-const serviceAccount = JSON.parse(
+/* const serviceAccount = JSON.parse(
   readFileSync(new URL('./K11ServiceAccountKey.json', import.meta.url))
-);
+); */
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)
 
 // Initialize Firebase Admin
 const app = initializeApp({
